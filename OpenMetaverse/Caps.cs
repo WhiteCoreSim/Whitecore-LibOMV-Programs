@@ -128,10 +128,12 @@ namespace OpenMetaverse
             // Create a request list
             OSDArray req = new OSDArray();
             // This list can be updated by using the following command to obtain a current list of capabilities the official linden viewer supports:
-            // wget -q -O - https://bitbucket.org/lindenlab/viewer-development/raw/default/indra/newview/llviewerregion.cpp | grep 'capabilityNames.append'  | sed 's/^[ \t]*//;s/capabilityNames.append("/req.Add("/'
+            // wget -q -O - https://bitbucket.org/lindenlab/viewer-release/raw/default/indra/newview/llviewerregion.cpp | grep 'capabilityNames.append'  | sed 's/^[ \t]*//;s/capabilityNames.append("/req.Add("/'
+            req.Add("AgentPreferences");
             req.Add("AgentState");
             req.Add("AttachmentResources");
             req.Add("AvatarPickerSearch");
+            req.Add("AvatarRenderInfo");
             req.Add("CharacterProperties");
             req.Add("ChatSessionRequest");
             req.Add("CopyInventoryFromNotecard");
@@ -140,12 +142,15 @@ namespace OpenMetaverse
             req.Add("EnvironmentSettings");
             req.Add("EstateChangeInfo");
             req.Add("EventQueueGet");
+            req.Add("FacebookConnect");
             req.Add("FetchInventory2");
             req.Add("FetchInventoryDescendents2");
             req.Add("FetchLib2");
             req.Add("FetchLibDescendents2");
+            req.Add("FlickrConnect");
             req.Add("GetDisplayNames");
             req.Add("GetMesh");
+            req.Add("GetMesh2");
             req.Add("GetObjectCost");
             req.Add("GetObjectPhysicsData");
             req.Add("GetTexture");
@@ -155,6 +160,7 @@ namespace OpenMetaverse
             req.Add("HomeLocation");
             req.Add("IncrementCOFVersion");
             req.Add("LandResources");
+            req.Add("LSLSyntax");
             req.Add("MapLayer");
             req.Add("MapLayerGod");
             req.Add("MeshUploadFlag");
@@ -184,6 +190,7 @@ namespace OpenMetaverse
             req.Add("StartGroupProposal");
             req.Add("TerrainNavMeshProperties");
             req.Add("TextureStats");
+            req.Add("TwitterConnect");
             req.Add("UntrustedSimulatorMessage");
             req.Add("UpdateAgentInformation");
             req.Add("UpdateAgentLanguage");
