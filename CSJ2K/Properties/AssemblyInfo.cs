@@ -1,31 +1,36 @@
+using System;
 using System.Reflection;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 
-//
-// General Information about an assembly is controlled through the following 
+[assembly: CLSCompliantAttribute(true)]
+
+// General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("OpenMetaverse")]
-[assembly: AssemblyDescription("OpenMetaverse library")]
-[assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("openmetaverse.org")]
-[assembly: AssemblyProduct("OpenMetaverse")]
-[assembly: AssemblyCopyright("Copyright © openmetaverse.org 2006-2014")]
-[assembly: AssemblyTrademark("")]
-[assembly: AssemblyCulture("")]		
 
-//
+// TODO: Review the values of the assembly attributes
+
+[assembly: AssemblyTitle("CSJ2K")]
+[assembly: AssemblyDescription("JPEG2000 decoding library")]
+[assembly: AssemblyCompany("")]
+[assembly: AssemblyProduct("CSJ2K")]
+[assembly: AssemblyCopyright("")]
+[assembly: AssemblyTrademark("")]
+[assembly: AssemblyCulture("")]
+
+
 // Version information for an assembly consists of the following four values:
 //
 //      Major Version
-//      Minor Version 
-//      Build Number
+//      Minor Version
 //      Revision
+//      Build Number
 //
-// You can specify all the values or you can default the Revision and Build Numbers 
+// You can specify all the values or you can default the Revision and Build Numbers
 // by using the '*' as shown below:
 
-[assembly: AssemblyVersion("0.9.3.0")]
+[assembly: AssemblyVersion("1.0.*")]
 
 //
 // In order to sign your assembly you must specify a key to use. Refer to the 
@@ -48,11 +53,15 @@ using System.Runtime.CompilerServices;
 //       relative to the project output directory which is
 //       %Project Directory%\obj\<configuration>. For example, if your KeyFile is
 //       located in the project directory, you would specify the AssemblyKeyFile 
-//       attribute as [assembly: AssemblyKeyFile("..\\..\\mykey.snk")]
+//       attribute as [assembly: AssemblyKeyFile("..\..\mykey.snk")]
 //   (*) Delay Signing is an advanced option - see the Microsoft .NET Framework
 //       documentation for more information on this.
 //
+
+[assembly: AssemblyConfiguration("")]
 [assembly: AssemblyDelaySign(false)]
 [assembly: AssemblyKeyFile("")]
 [assembly: AssemblyKeyName("")]
-[assembly: AssemblyFileVersionAttribute("0.9.3.0")]
+
+
+[assembly: ComVisibleAttribute(false)]

@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Open Metaverse Foundation")]
 [assembly: AssemblyProduct("GridImageUpload")]
-[assembly: AssemblyCopyright("Copyright © Open Metaverse Foundation")]
+[assembly: AssemblyCopyright("Copyright © Open Metaverse Foundation 2008 - 2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

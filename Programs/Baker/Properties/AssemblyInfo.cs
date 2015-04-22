@@ -1,16 +1,16 @@
-﻿using System.Reflection;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("OpenMetaverse.Utilities")]
+[assembly: AssemblyTitle("Baker")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Open Metaverse Foundation")]
-[assembly: AssemblyProduct("OpenMetaverse.Utilities")]
-[assembly: AssemblyCopyright("Copyright © Open Metaverse Foundation 2008 - 2015")]
+[assembly: AssemblyProduct("Baker")]
+[assembly: AssemblyCopyright("Copyright � Open Metaverse Foundation 2008 - 2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
