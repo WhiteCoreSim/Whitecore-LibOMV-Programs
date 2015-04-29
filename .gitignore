@@ -5,6 +5,9 @@ compile.bat
 *.sln
 *.suo
 *.cache
+*.build
+*.mdp
+*.mds
 
 [Oo]bj/
 [Bb]in/

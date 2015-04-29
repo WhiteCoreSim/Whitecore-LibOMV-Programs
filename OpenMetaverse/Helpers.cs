@@ -26,12 +26,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
-using OpenMetaverse.Packets;
 using System.IO;
 using System.Reflection;
+using System.Text;
 using OpenMetaverse.StructuredData;
-using ComponentAce.Compression.Libs.zlib;
+using ZLib.Net;
 
 namespace OpenMetaverse
 {

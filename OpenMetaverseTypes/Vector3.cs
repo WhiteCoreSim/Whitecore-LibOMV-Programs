@@ -576,7 +576,7 @@ namespace OpenMetaverse
         /// <returns></returns>
         public static explicit operator Vector3(Vector3d value)
         {
-            Vector3d foo = (Vector3d)Vector3.Zero;
+            //Vector3d foo = (Vector3d)Vector3.Zero;
             return new Vector3(value);
         }
 

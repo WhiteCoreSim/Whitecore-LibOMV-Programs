@@ -70,6 +70,7 @@ namespace OpenMetaverse
                 if(Settings.LOG_LEVEL != Helpers.LogLevel.None)
                     LogInstance.Info("No log configuration found, defaulting to console logging");
             }
+
         }
 
         /// <summary>
