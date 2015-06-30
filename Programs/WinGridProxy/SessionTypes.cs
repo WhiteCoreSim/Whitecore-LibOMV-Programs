@@ -624,7 +624,11 @@ namespace WinGridProxy
             this.Host = uri;
             this.Name = capsKey;
             this.ContentType = responseHeaders.Get("Content-Type");
-            this.Length = Int32.Parse(responseHeaders.Get("Content-Length"));
+            var ContentLength = responseHeaders.Get("Content-Length");
+            if (ContentLength != null)
+                this.Length = Int32.Parse (ContentLength);
+            else
+                this.Length = 0;
         }
 
         public override string ToPrettyString(Direction direction)

@@ -10198,6 +10198,12 @@
             <summary>Raises the AvatarUpdate Event</summary>
             <param name="e">A AvatarUpdateEventArgs object containing
             the data sent from the simulator</param></member>
+        <member name="M:OpenMetaverse.ObjectManager.OnParticleUpdate(OpenMetaverse.ParticleUpdateEventArgs)">
+            <summary>
+            Raises the ParticleUpdate Event
+            </summary>
+            <param name="e">A ParticleUpdateEventArgs object containing
+            the data sent from the simulator</param></member>
         <member name="F:OpenMetaverse.ObjectManager.m_AvatarUpdateLock">
             <summary>Thread sync lock object</summary></member>
         <member name="E:OpenMetaverse.ObjectManager.AvatarUpdate">
@@ -10927,6 +10933,19 @@
             <param name="avatar">The <see cref="T:OpenMetaverse.Avatar" /> data</param>
             <param name="timeDilation">The simulator time dilation</param>
             <param name="isNew">The avatar was not in the dictionary before this update</param></member>
+        <member name="P:OpenMetaverse.ParticleUpdateEventArgs.Simulator">
+            <summary>Get the simulator the object originated from</summary></member>
+        <member name="P:OpenMetaverse.ParticleUpdateEventArgs.ParticleSystem">
+            <summary>Get the <see cref="P:OpenMetaverse.ParticleUpdateEventArgs.ParticleSystem" /> data</summary></member>
+        <member name="P:OpenMetaverse.ParticleUpdateEventArgs.Source">
+            <summary>Get <see cref="T:OpenMetaverse.Primitive" /> source</summary></member>
+        <member name="M:OpenMetaverse.ParticleUpdateEventArgs.#ctor(OpenMetaverse.Simulator,OpenMetaverse.Primitive.ParticleSystem,OpenMetaverse.Primitive)">
+            <summary>
+            Construct a new instance of the ParticleUpdateEventArgs class
+            </summary>
+            <param name="simulator">The simulator the packet originated from</param>
+            <param name="particlesystem">The ParticleSystem data</param>
+            <param name="source">The Primitive source</param></member>
         <member name="T:OpenMetaverse.ObjectPropertiesEventArgs">
             <summary>Provides additional primitive data for the <see cref="E:OpenMetaverse.ObjectManager.ObjectProperties" /> event</summary>
             <remarks><para>The <see cref="E:OpenMetaverse.ObjectManager.ObjectProperties" /> event occurs when the simulator sends
@@ -26264,10 +26283,273 @@
             <summary></summary></member>
         <member name="F:OpenMetaverse.TextureAttributes.All">
             <summary></summary></member>
+        <member name="T:OpenMetaverse.Rendering.EndianAwareBinaryReader">
+            <summary>
+            Binary reader, which is endian aware
+            </summary></member>
+        <member name="T:OpenMetaverse.Rendering.EndianAwareBinaryReader.SourceFormat">
+            What is the format of the source file</member>
+        <member name="M:OpenMetaverse.Rendering.EndianAwareBinaryReader.#ctor(System.IO.Stream)">
+            <summary>
+            Construct a reader from a stream
+            </summary>
+            <param name="stream">The stream to read from</param></member>
+        <member name="M:OpenMetaverse.Rendering.EndianAwareBinaryReader.#ctor(System.IO.Stream,OpenMetaverse.Rendering.EndianAwareBinaryReader.SourceFormat)">
+            <summary>
+            Construct a reader from a stream
+            </summary>
+            <param name="stream">The stream to read from</param>
+            <param name="format">What is the format of the file, assumes PC and similar architecture</param></member>
+        <member name="M:OpenMetaverse.Rendering.EndianAwareBinaryReader.ReadInt32">
+            <summary>
+            Read a 32 bit integer
+            </summary>
+            <returns>A 32 bit integer in the system's endianness</returns></member>
+        <member name="M:OpenMetaverse.Rendering.EndianAwareBinaryReader.ReadInt16">
+            <summary>
+            Read a 16 bit integer
+            </summary>
+            <returns>A 16 bit integer in the system's endianness</returns></member>
+        <member name="M:OpenMetaverse.Rendering.EndianAwareBinaryReader.ReadInt64">
+            <summary>
+            Read a 64 bit integer
+            </summary>
+            <returns>A 64 bit integer in the system's endianness</returns></member>
+        <member name="M:OpenMetaverse.Rendering.EndianAwareBinaryReader.ReadUInt32">
+            <summary>
+            Read an unsigned 32 bit integer
+            </summary>
+            <returns>A 32 bit unsigned integer in the system's endianness</returns></member>
+        <member name="M:OpenMetaverse.Rendering.EndianAwareBinaryReader.ReadSingle">
+            <summary>
+            Read a single precision floating point value
+            </summary>
+            <returns>A single precision floating point value in the system's endianness</returns></member>
+        <member name="M:OpenMetaverse.Rendering.EndianAwareBinaryReader.ReadDouble">
+            <summary>
+            Read a double precision floating point value
+            </summary>
+            <returns>A double precision floating point value in the system's endianness</returns></member>
+        <member name="M:OpenMetaverse.Rendering.EndianAwareBinaryReader.ReadString">
+            <summary>
+            Read a UTF-8 string
+            </summary>
+            <returns>A standard system string</returns></member>
+        <member name="M:OpenMetaverse.Rendering.EndianAwareBinaryReader.ReadString(System.Int32)">
+            <summary>
+            Read a UTF-8 string
+            </summary>
+            <param name="size">length of string to read</param>
+            <returns>A standard system string</returns></member>
+        <member name="T:OpenMetaverse.Rendering.LindenMesh">
+            <summary>
+            Load and handle Linden Lab binary meshes.
+            </summary>
+            <remarks>
+            The exact definition of this file is a bit sketchy, especially concerning skin weights.
+            A good starting point is on the
+            <a href="http://wiki.secondlife.com/wiki/Avatar_Appearance#Linden_binary_mesh_file">second life wiki</a>
+            </remarks></member>
+        <member name="T:OpenMetaverse.Rendering.LindenMesh.Face">
+            <summary>
+            Defines a polygon
+            </summary></member>
+        <member name="T:OpenMetaverse.Rendering.LindenMesh.Vertex">
+            <summary>
+            Structure of a vertex, No surprises there, except for the Detail tex coord
+            </summary>
+            <remarks>
+            The skinweights are a tad unconventional. The best explanation found is:
+            &gt;Each weight actually contains two pieces of information. The number to the
+            &gt;left of the decimal point is the index of the joint and also implicitly
+            &gt;indexes to the following joint. The actual weight is to the right of the
+            &gt;decimal point and interpolates between these two joints. The index is into
+            &gt;an "expanded" list of joints, not just a linear array of the joints as
+            &gt;defined in the skeleton file. In particular, any joint that has more than
+            &gt;one child will be repeated in the list for each of its children.
+            Maybe I'm dense, but that description seems to be a bit hard to build an
+            algorithm on.
+            Esentially the weights are compressed into one floating point value.
+            1. The whole number part is an index into an array of joints
+            2. The fractional part is the weight that joint has
+            3. If the fractional part is 0 (x.0000) then the vertex is 100% influenced by the specified joint
+            </remarks></member>
+        <member name="M:OpenMetaverse.Rendering.LindenMesh.Vertex.ToString">
+            <summary>
+            Provide a nice format for debugging
+            </summary>
+            <returns>Vertex definition as a string</returns></member>
+        <member name="T:OpenMetaverse.Rendering.LindenMesh.MorphVertex">
+            <summary>
+            Describes deltas to apply to a vertex in order to morph a vertex
+            </summary></member>
+        <member name="M:OpenMetaverse.Rendering.LindenMesh.MorphVertex.ToString">
+            <summary>
+            Provide a nice format for debugging
+            </summary>
+            <returns>MorphVertex definition as a string</returns></member>
+        <member name="T:OpenMetaverse.Rendering.LindenMesh.Morph">
+            <summary>
+            Describes a named mesh morph, essentially a named list of MorphVertices
+            </summary></member>
+        <member name="M:OpenMetaverse.Rendering.LindenMesh.Morph.ToString">
+            <summary>
+            Provide a nice format for debugging
+            </summary>
+            <returns>The name of the morph</returns></member>
+        <member name="T:OpenMetaverse.Rendering.LindenMesh.VertexRemap">
+            <summary>
+            Don't really know what this does
+            </summary></member>
+        <member name="M:OpenMetaverse.Rendering.LindenMesh.VertexRemap.ToString">
+            <summary>
+            Provide a nice format for debugging
+            </summary>
+            <returns>Human friendly format</returns></member>
+        <member name="T:OpenMetaverse.Rendering.LindenMesh.ReferenceMesh">
+            <summary>
+            A reference mesh is one way to implement level of detail
+            </summary>
+            <remarks>
+            Reference meshes are supplemental meshes to full meshes. For all practical
+            purposes almost all lod meshes are implemented as reference meshes, except for
+            'avatar_eye_1.llm' which for some reason is implemented as a full mesh.
+            </remarks></member>
+        <member name="M:OpenMetaverse.Rendering.LindenMesh.ReferenceMesh.LoadMesh(System.String)">
+            <summary>
+            Load a mesh from a stream
+            </summary>
+            <param name="filename">Filename and path of the file containing the reference mesh</param></member>
         <member name="T:OpenMetaverse.Rendering.LindenMesh.LODMesh">
             <summary>
             Level of Detail mesh
             </summary></member>
+        <member name="M:OpenMetaverse.Rendering.LindenMesh.#ctor(System.String)">
+            <summary>
+            Construct a linden mesh with the given name
+            </summary>
+            <param name="name">the name of the mesh</param></member>
+        <member name="M:OpenMetaverse.Rendering.LindenMesh.#ctor(System.String,OpenMetaverse.Rendering.LindenSkeleton)">
+            <summary>
+            Construct a linden mesh with the given name
+            </summary>
+            <param name="name">the name of the mesh</param>
+            <param name="skeleton">The skeleton governing mesh deformation</param></member>
+        <member name="M:OpenMetaverse.Rendering.LindenMesh.LoadMesh(System.String)">
+            <summary>
+            Load the mesh from a stream
+            </summary>
+            <param name="filename">The filename and path of the file containing the mesh data</param></member>
+        <member name="T:OpenMetaverse.Rendering.LindenMesh.SkinWeightElement">
+            <summary>
+            Layout of one skinweight element
+            </summary></member>
+        <member name="F:OpenMetaverse.Rendering.LindenMesh.SkinWeights">
+            <summary>List of skinweights, in the same order as the mesh vertices</summary></member>
+        <member name="M:OpenMetaverse.Rendering.LindenMesh.ExpandCompressedSkinWeights(System.Collections.Generic.List{System.String})">
+            <summary>
+            Decompress the skinweights
+            </summary>
+            <param name="expandedJointList">the expanded joint list, used to index which bones should influece the vertex</param></member>
+        <member name="M:OpenMetaverse.Rendering.LindenMesh.LoadReferenceMesh(System.Int32,System.String)">
+            <summary>
+            Load a reference mesh from a given stream
+            </summary>
+            <param name="lodLevel">The lod level of this reference mesh</param>
+            <param name="filename">the name and path of the file containing the mesh data</param>
+            <returns>the loaded reference mesh</returns></member>
+        <member name="M:OpenMetaverse.Rendering.LindenMesh.TrimAt0(System.String)">
+            <summary>
+            Trim a string at the first occurence of NUL
+            </summary>
+            <remarks>
+            The llm file uses null terminated strings (C/C++ style), this is where
+            the conversion is made.
+            </remarks>
+            <param name="s">The string to trim</param>
+            <returns>A standard .Net string</returns></member>
+        <member name="T:OpenMetaverse.Rendering.LindenSkeleton">
+            <summary>
+            load the 'avatar_skeleton.xml'
+            </summary>
+            <remarks>
+            Partial class which extends the auto-generated 'LindenSkeleton.Xsd.cs'.eton.xsd
+            </remarks>
+            <remarks /></member>
+        <member name="M:OpenMetaverse.Rendering.LindenSkeleton.Load">
+            <summary>
+            Load a skeleton from a given file.
+            </summary>
+            <remarks>
+            We use xml scema validation on top of the xml de-serializer, since the schema has
+            some stricter checks than the de-serializer provides. E.g. the vector attributes
+            are guaranteed to hold only 3 float values. This reduces the need for error checking
+            while working with the loaded skeleton.
+            </remarks>
+            <returns>A valid recursive skeleton</returns></member>
+        <member name="M:OpenMetaverse.Rendering.LindenSkeleton.Load(System.String)">
+            <summary>
+            Load a skeleton from a given file.
+            </summary>
+            <remarks>
+            We use xml scema validation on top of the xml de-serializer, since the schema has
+            some stricter checks than the de-serializer provides. E.g. the vector attributes
+            are guaranteed to hold only 3 float values. This reduces the need for error checking
+            while working with the loaded skeleton.
+            </remarks>
+            <param name="fileName">The path to the skeleton definition file</param>
+            <returns>A valid recursive skeleton</returns></member>
+        <member name="M:OpenMetaverse.Rendering.LindenSkeleton.BuildExpandedJointList(System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Build and "expanded" list of joints
+            </summary>
+            <remarks>
+            The algorithm is based on this description:
+            &gt;An "expanded" list of joints, not just a
+            &gt;linear array of the joints as defined in the skeleton file.
+            &gt;In particular, any joint that has more than one child will
+            &gt;be repeated in the list for each of its children.
+            </remarks>
+            <param name="jointsFilter">The list should only take these joint names in consideration</param>
+            <returns>An "expanded" joints list as a flat list of bone names</returns></member>
+        <member name="M:OpenMetaverse.Rendering.LindenSkeleton.ExpandJoint(OpenMetaverse.Rendering.Joint,OpenMetaverse.Rendering.Joint,System.Collections.Generic.List{System.String},System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Expand one joint
+            </summary>
+            <param name="parentJoint">The parent of the joint we are operating on</param>
+            <param name="currentJoint">The joint we are supposed to expand</param>
+            <param name="expandedJointList">Joint list that we will extend upon</param>
+            <param name="jointsFilter">The expanded list should only contain these joints</param></member>
+        <member name="P:OpenMetaverse.Rendering.LindenSkeleton.bone">
+            <remarks /></member>
+        <member name="P:OpenMetaverse.Rendering.LindenSkeleton.version">
+            <remarks /></member>
+        <member name="P:OpenMetaverse.Rendering.LindenSkeleton.versionSpecified">
+            <remarks /></member>
+        <member name="P:OpenMetaverse.Rendering.LindenSkeleton.num_bones">
+            <remarks /></member>
+        <member name="P:OpenMetaverse.Rendering.LindenSkeleton.num_collision_volumes">
+            <remarks /></member>
+        <member name="T:OpenMetaverse.Rendering.Joint">
+            <remarks /></member>
+        <member name="P:OpenMetaverse.Rendering.Joint.collision_volume">
+            <remarks /></member>
+        <member name="P:OpenMetaverse.Rendering.Joint.bone">
+            <remarks /></member>
+        <member name="P:OpenMetaverse.Rendering.Joint.pivot">
+            <remarks /></member>
+        <member name="T:OpenMetaverse.Rendering.CollisionVolume">
+            <remarks /></member>
+        <member name="T:OpenMetaverse.Rendering.JointBase">
+            <remarks /></member>
+        <member name="P:OpenMetaverse.Rendering.JointBase.name">
+            <remarks /></member>
+        <member name="P:OpenMetaverse.Rendering.JointBase.pos">
+            <remarks /></member>
+        <member name="P:OpenMetaverse.Rendering.JointBase.rot">
+            <remarks /></member>
+        <member name="P:OpenMetaverse.Rendering.JointBase.scale">
+            <remarks /></member>
         <member name="T:OpenMetaverse.Rendering.FacetedMesh">
             <summary>
             Contains all mesh faces that belong to a prim
