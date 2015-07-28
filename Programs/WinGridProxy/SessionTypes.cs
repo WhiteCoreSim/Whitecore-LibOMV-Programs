@@ -241,7 +241,7 @@ namespace WinGridProxy
                             else
                                 return "No Decoder for " + this.Name + Environment.NewLine +
                                        OSDParser.SerializeLLSDNotationFormatted(data) + Environment.NewLine +
-                                       "Please report this at http://jira.openmetaverse.org Be sure to include the entire message.";
+                                       "Please report this at https://github.com/WhiteCoreSim/Whitecore-LibOMV/wiki/Unhandled-Packets Be sure to include the entire message.";
                         }
                     }
                 }
@@ -267,7 +267,7 @@ namespace WinGridProxy
                                 else
                                     return "No Decoder for " + this.Name + Environment.NewLine +
                                         OSDParser.SerializeLLSDNotationFormatted(data) + Environment.NewLine +
-                                        "Please report this at http://jira.openmetaverse.org Be sure to include the entire message.";
+                                        "Please report this at https://github.com/WhiteCoreSim/Whitecore-LibOMV/wiki/Unhandled-Packets Be sure to include the entire message.";
                             }
                             else
                             {
