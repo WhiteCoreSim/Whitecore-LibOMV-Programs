@@ -128,10 +128,16 @@ namespace OpenMetaverse
         Mesh = 49,
         /// <summary>Marketplace direct delivery inbox ("Received Items")</summary>
         Inbox = 50,
-        /// <summary>Marketplace direct delivery outbox</summary>
+        /// <summary>Marketplace direct delivery outbox ("Merchant Outbox")</summary>
         Outbox = 51,
-        /// <summary></summary>
-        BasicRoot = 51,
+        /// <summary>Root folder</summary>
+        BasicRoot = 52,
+        /// <summary>Viewer-Managed Marketplace Listings</summary>
+        VMMListings = 53,
+        /// <summary>Viewer-Managed Marketplace Stock</summary>
+        VMMStocks = 54,
+        /// <summary>Viewer-Managed Marketplace Versions (not used)</summary>
+        VMMVersions = 55,
     }
 
     /// <summary>
