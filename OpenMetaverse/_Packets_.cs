@@ -27349,12 +27349,6 @@ namespace OpenMetaverse.Packets
         {
             public Vector3 HoverHeight;
 
-            public AppearanceHoverBlock() { }
-            public AppearanceHoverBlock(byte[] bytes, ref int i)
-            {
-                FromBytes(bytes, ref i);
-            }
-
             public override int Length
             {
                 get
@@ -27362,12 +27356,18 @@ namespace OpenMetaverse.Packets
                     return 12;
                 }
             }
+            
+            public AppearanceHoverBlock() { }
+            public AppearanceHoverBlock(byte[] bytes, ref int i)
+            {
+                FromBytes(bytes, ref i);
+            }
 
             public override void FromBytes(byte[] bytes, ref int i)
             {
                 try
                 {
-                    HoverHeight.FromBytes(bytes, i);// i += 12;
+                    HoverHeight.FromBytes(bytes, i); i += 12;
                 }
                 catch (Exception)
                 {
@@ -27377,7 +27377,7 @@ namespace OpenMetaverse.Packets
 
             public override void ToBytes(byte[] bytes, ref int i)
             {
-                HoverHeight.ToBytes(bytes, i);
+                HoverHeight.ToBytes(bytes, i); i += 12;
             }
         }
 
