@@ -138,6 +138,8 @@ namespace OpenMetaverse
         VMMStocks = 54,
         /// <summary>Viewer-Managed Marketplace Versions (not used)</summary>
         VMMVersions = 55,
+		/// <summary>Hypergrid Suitcase folder</summary>
+		HGSuitcase = 100
     }
 
     /// <summary>
