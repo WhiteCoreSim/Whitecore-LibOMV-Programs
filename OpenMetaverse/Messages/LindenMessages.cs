@@ -1352,7 +1352,7 @@ namespace OpenMetaverse.Messages.Linden
             public UUID FolderID;
             public UUID ParentID;
             public string Name;
-            public AssetType Type;
+            public FolderType Type;
 
             public static FolderDataInfo FromOSD(OSD data)
             {
@@ -1365,7 +1365,7 @@ namespace OpenMetaverse.Messages.Linden
                 ret.FolderID = map["FolderID"];
                 ret.ParentID = map["ParentID"];
                 ret.Name = map["Name"];
-                ret.Type = (AssetType)map["Type"].AsInteger();
+                ret.Type = (FolderType)map["Type"].AsInteger();
                 return ret;
             }
         }
@@ -4376,7 +4376,6 @@ namespace OpenMetaverse.Messages.Linden
 
             ret["ObjectData"] = array;
             return ret;
-
         }
 
         /// <summary>
@@ -4405,7 +4404,7 @@ namespace OpenMetaverse.Messages.Linden
     public class RenderMaterialsMessage : IMessage
     {
         public OSD MaterialData;
-		
+
         /// <summary>
         /// Deserializes the message
         /// </summary>
@@ -4439,17 +4438,17 @@ namespace OpenMetaverse.Messages.Linden
                 MaterialData = new OSDMap();
             }
         }
-        
-		/// <summary>
-		/// Serializes the message
-		/// </summary>
-		/// <returns>Serialized OSD</returns>
+
+        /// <summary>
+        /// Serializes the message
+        /// </summary>
+        /// <returns>Serialized OSD</returns>
         public OSDMap Serialize()
         {
             return new OSDMap();
         }
     }
-	
+
     public class GetObjectCostRequest : IMessage
     {
         /// <summary> Object IDs for which to request cost information
@@ -4564,9 +4563,9 @@ namespace OpenMetaverse.Messages.Linden
                 return new GetObjectCostMessage();
             }
         }
-    }	
-    
-	#endregion Object Messages
+    }
+
+    #endregion Object Messages
 
     #region Object Media Messages
     /// <summary>
@@ -5289,9 +5288,9 @@ namespace OpenMetaverse.Messages.Linden
         public OSDMap Serialize()
         {
             OSDArray names = new OSDArray(2);
-			names.Add(OldDisplayName);
-			names.Add(NewDisplayName);
-			
+            names.Add(OldDisplayName);
+            names.Add(NewDisplayName);
+
             OSDMap name = new OSDMap();
             name["display_name"] = names;
             return name;
