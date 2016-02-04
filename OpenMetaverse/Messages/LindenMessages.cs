@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (c) 2006-2014, openmetaverse.org
+ * Copyright (c) 2006-2016, openmetaverse.co
  * All rights reserved.
  *
  * - Redistribution and use in source and binary forms, with or without 
@@ -7,7 +7,7 @@
  *
  * - Redistributions of source code must retain the above copyright notice, this
  *   list of conditions and the following disclaimer.
- * - Neither the name of the openmetaverse.org nor the names 
+ * - Neither the name of the openmetaverse.co nor the names 
  *   of its contributors may be used to endorse or promote products derived from
  *   this software without specific prior written permission.
  *
@@ -3877,10 +3877,10 @@ namespace OpenMetaverse.Messages.Linden
                 queryDataMap["GlobalZ"] = OSD.FromReal(QueryDataBlocks[i].GlobalZ);
                 queryDataMap["Name"] = OSD.FromString(QueryDataBlocks[i].Name);
                 queryDataMap["OwnerID"] = OSD.FromUUID(QueryDataBlocks[i].OwnerID);
-                queryDataMap["Price"] = OSD.FromInteger(QueryDataBlocks[i].Price);
                 queryDataMap["SimName"] = OSD.FromString(QueryDataBlocks[i].SimName);
                 queryDataMap["SnapshotID"] = OSD.FromUUID(QueryDataBlocks[i].SnapShotID);
                 queryDataMap["ProductSKU"] = OSD.FromString(QueryDataBlocks[i].ProductSku);
+                queryDataMap["Price"] = OSD.FromInteger(QueryDataBlocks[i].Price);                
                 dataBlocksArray.Add(queryDataMap);
             }
 
@@ -3925,10 +3925,10 @@ namespace OpenMetaverse.Messages.Linden
                 data.GlobalZ = (float)dataMap["GlobalZ"].AsReal();
                 data.Name = dataMap["Name"].AsString();
                 data.OwnerID = dataMap["OwnerID"].AsUUID();
-                data.Price = dataMap["Price"].AsInteger();
                 data.SimName = dataMap["SimName"].AsString();
                 data.SnapShotID = dataMap["SnapshotID"].AsUUID();
                 data.ProductSku = dataMap["ProductSKU"].AsString();
+                data.Price = dataMap["Price"].AsInteger();                
                 QueryDataBlocks[i] = data;
             }
 
