@@ -33,6 +33,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Text;
 using OMV = OpenMetaverse;
 using OMVR = OpenMetaverse.Rendering;
 

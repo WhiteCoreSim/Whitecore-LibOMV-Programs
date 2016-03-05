@@ -4319,7 +4319,7 @@ namespace OpenMetaverse.Packets
                 i = QueryRepliesStart;
                 while (fixedLength + variableLength + acksLength < Packet.MTU && i < QueryReplies.Length) {
                     int blockLength = QueryReplies[i].Length;
-                    if (fixedLength + variableLength + blockLength + acksLength <= MTU || 1 == QueryRepliesStart) {
+                    if (fixedLength + variableLength + blockLength + acksLength <= MTU || i == QueryRepliesStart) {
                         variableLength += blockLength;
                         ++QueryRepliesCount;
                     }
@@ -32349,7 +32349,7 @@ namespace OpenMetaverse.Packets
 
         }
 
-		/// <exclude/>
+        /// <exclude/>
         public sealed class ExperienceBlock : PacketBlock
         {
             public UUID ExperienceID;
