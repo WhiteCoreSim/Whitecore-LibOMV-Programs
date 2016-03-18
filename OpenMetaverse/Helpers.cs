@@ -30,7 +30,7 @@ using System.IO;
 using System.Reflection;
 using System.Text;
 using OpenMetaverse.StructuredData;
-using ZLib.Net;
+using ZLibNet;
 
 namespace OpenMetaverse
 {

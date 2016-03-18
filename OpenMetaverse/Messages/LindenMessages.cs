@@ -30,7 +30,7 @@ using System.IO;
 using System.Net;
 using OpenMetaverse.Interfaces;
 using OpenMetaverse.StructuredData;
-using ZLib.Net;
+using ZLibNet;
 
 namespace OpenMetaverse.Messages.Linden
 {
