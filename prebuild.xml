@@ -546,7 +546,7 @@
     </Project>
 
 
-    <Project name="WinGridProxy" path="Programs/WinGridProxy" type="WinExe" frameworkVersion="v4_0" icon="..\..\docs\Libomv.ico">
+    <Project name="WinGridProxy" path="Programs/WinGridProxy" type="WinExe" frameworkVersion="v4_0" icon="..\..\docs\Libomv-WG.ico">
       <Configuration name="Debug">
         <Options>
           <OutputPath>../../bin/</OutputPath>
