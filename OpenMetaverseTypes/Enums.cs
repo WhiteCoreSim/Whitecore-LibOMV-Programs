@@ -128,6 +128,9 @@ namespace OpenMetaverse
         Notecard = 7,
         /// <summary>The root folder type</summary>
         Root = 8,
+        /// <summary>Non-conformant OpenSim root folder type</summary>
+        [Obsolete ("No longer used, please use FolderType.Root")]
+        OldRoot = 9,
         /// <summary>LSLText folder</summary>
         LSLText = 10,
         /// <summary>Bodyparts folder</summary>
@@ -255,38 +258,55 @@ namespace OpenMetaverse
     public enum WearableType : byte
     {
         /// <summary>Body shape</summary>
+        [EnumInfo(Text = "Shape")]
         Shape = 0,
         /// <summary>Skin textures and attributes</summary>
+        [EnumInfo(Text = "Skin")]
         Skin,
         /// <summary>Hair</summary>
+        [EnumInfo(Text = "Hair")]
         Hair,
         /// <summary>Eyes</summary>
+        [EnumInfo(Text = "Eyes")]
         Eyes,
         /// <summary>Shirt</summary>
+        [EnumInfo(Text = "Shirt")]
         Shirt,
         /// <summary>Pants</summary>
+        [EnumInfo(Text = "Pants")]
         Pants,
         /// <summary>Shoes</summary>
+        [EnumInfo(Text = "Shoes")]
         Shoes,
         /// <summary>Socks</summary>
+        [EnumInfo(Text = "Socks")]
         Socks,
         /// <summary>Jacket</summary>
+        [EnumInfo(Text = "Jacket")]
         Jacket,
         /// <summary>Gloves</summary>
+        [EnumInfo(Text = "Gloves")]
         Gloves,
         /// <summary>Undershirt</summary>
+        [EnumInfo(Text = "Undershirt")]
         Undershirt,
         /// <summary>Underpants</summary>
+        [EnumInfo(Text = "Underpants")]
         Underpants,
         /// <summary>Skirt</summary>
+        [EnumInfo(Text = "Skirt")]
         Skirt,
         /// <summary>Alpha mask to hide parts of the avatar</summary>
+        [EnumInfo(Text = "Alpha")]
         Alpha,
         /// <summary>Tattoo</summary>
+        [EnumInfo(Text = "Tattoo")]
         Tattoo,
         /// <summary>Physics</summary>
+        [EnumInfo(Text = "Physics")]
         Physics,
         /// <summary>Invalid wearable asset</summary>
+        [EnumInfo(Text = "Invalid")]
         Invalid = 255
     };
 }
