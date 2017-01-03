@@ -34,40 +34,40 @@ namespace OpenMetaverse
 
     class TimedCacheKey<TKey> : IComparable<TKey>
     {
-        private DateTime expirationDate;
-        private bool slidingExpiration;
-        private TimeSpan slidingExpirationWindowSize;
-        private TKey key;
+        DateTime _expirationDate;
+        bool _slidingExpiration;
+        TimeSpan _slidingExpirationWindowSize;
+        TKey _key;
 
-        public DateTime ExpirationDate { get { return expirationDate; } }
-        public TKey Key { get { return key; } }
-        public bool SlidingExpiration { get { return slidingExpiration; } }
-        public TimeSpan SlidingExpirationWindowSize { get { return slidingExpirationWindowSize; } }
+        public DateTime ExpirationDate { get { return _expirationDate; } }
+        public TKey Key { get { return _key; } }
+        public bool SlidingExpiration { get { return _slidingExpiration; } }
+        public TimeSpan SlidingExpirationWindowSize { get { return _slidingExpirationWindowSize; } }
 
         public TimedCacheKey(TKey key, DateTime expirationDate)
         {
-            this.key = key;
-            this.slidingExpiration = false;
-            this.expirationDate = expirationDate;
+            _key = key;
+            _slidingExpiration = false;
+            _expirationDate = expirationDate;
         }
 
         public TimedCacheKey(TKey key, TimeSpan slidingExpirationWindowSize)
         {
-            this.key = key;
-            this.slidingExpiration = true;
-            this.slidingExpirationWindowSize = slidingExpirationWindowSize;
+            _key = key;
+            _slidingExpiration = true;
+            _slidingExpirationWindowSize = slidingExpirationWindowSize;
             Accessed();
         }
 
         public void Accessed()
         {
-            if (slidingExpiration)
-                expirationDate = DateTime.Now.Add(slidingExpirationWindowSize);
+            if (_slidingExpiration)
+                _expirationDate = DateTime.Now.Add(_slidingExpirationWindowSize);
         }
 
         public int CompareTo(TKey other)
         {
-            return key.GetHashCode().CompareTo(other.GetHashCode());
+            return _key.GetHashCode().CompareTo(other.GetHashCode());
         }
     }
 
@@ -81,13 +81,13 @@ namespace OpenMetaverse
         #region Private fields
 
         /// <summary>For thread safety</summary>
-        object syncRoot = new object();
-        /// <summary>For thread safety</summary>
-        object isPurging = new object();
+        readonly object syncRoot = new object();
 
-        Dictionary<TimedCacheKey<TKey>, TValue> timedStorage = new Dictionary<TimedCacheKey<TKey>, TValue>();
-        Dictionary<TKey, TimedCacheKey<TKey>> timedStorageIndex = new Dictionary<TKey, TimedCacheKey<TKey>>();
-        private System.Timers.Timer timer = new System.Timers.Timer(TimeSpan.FromSeconds(CACHE_PURGE_HZ).TotalMilliseconds);
+        /// <summary>For thread safety</summary>
+        readonly object isPurging = new object ();
+        readonly Dictionary<TimedCacheKey<TKey>, TValue> timedStorage = new Dictionary<TimedCacheKey<TKey>, TValue> ();
+        readonly Dictionary<TKey, TimedCacheKey<TKey>> timedStorageIndex = new Dictionary<TKey, TimedCacheKey<TKey>> ();
+        System.Timers.Timer timer = new System.Timers.Timer(TimeSpan.FromSeconds(CACHE_PURGE_HZ).TotalMilliseconds);
 
         #endregion
 
@@ -110,17 +110,13 @@ namespace OpenMetaverse
             try
             {
                 // This is the actual adding of the key
-                if (timedStorageIndex.ContainsKey(key))
-                {
+                if (timedStorageIndex.ContainsKey (key)) {
                     return false;
                 }
-                else
-                {
-                    TimedCacheKey<TKey> internalKey = new TimedCacheKey<TKey>(key, DateTime.UtcNow + TimeSpan.FromSeconds(expirationSeconds));
-                    timedStorage.Add(internalKey, value);
-                    timedStorageIndex.Add(key, internalKey);
-                    return true;
-                }
+                var internalKey = new TimedCacheKey<TKey> (key, DateTime.UtcNow + TimeSpan.FromSeconds (expirationSeconds));
+                timedStorage.Add (internalKey, value);
+                timedStorageIndex.Add (key, internalKey);
+                return true;
             }
             finally { Monitor.Exit(syncRoot); }
         }
@@ -132,17 +128,13 @@ namespace OpenMetaverse
             try
             {
                 // This is the actual adding of the key
-                if (timedStorageIndex.ContainsKey(key))
-                {
+                if (timedStorageIndex.ContainsKey (key)) {
                     return false;
                 }
-                else
-                {
-                    TimedCacheKey<TKey> internalKey = new TimedCacheKey<TKey>(key, slidingExpiration);
-                    timedStorage.Add(internalKey, value);
-                    timedStorageIndex.Add(key, internalKey);
-                    return true;
-                }
+                var internalKey = new TimedCacheKey<TKey> (key, slidingExpiration);
+                timedStorage.Add (internalKey, value);
+                timedStorageIndex.Add (key, internalKey);
+                return true;
             }
             finally { Monitor.Exit(syncRoot); }
         }
@@ -153,16 +145,12 @@ namespace OpenMetaverse
                 throw new ApplicationException("Lock could not be acquired after " + MAX_LOCK_WAIT + "ms");
             try
             {
-                if (Contains(key))
-                {
-                    Update(key, value, expirationSeconds);
+                if (Contains (key)) {
+                    Update (key, value, expirationSeconds);
                     return false;
                 }
-                else
-                {
-                    Add(key, value, expirationSeconds);
-                    return true;
-                }
+                Add (key, value, expirationSeconds);
+                return true;
             }
             finally { Monitor.Exit(syncRoot); }
         }
@@ -173,16 +161,12 @@ namespace OpenMetaverse
                 throw new ApplicationException("Lock could not be acquired after " + MAX_LOCK_WAIT + "ms");
             try
             {
-                if (Contains(key))
-                {
-                    Update(key, value, slidingExpiration);
+                if (Contains (key)) {
+                    Update (key, value, slidingExpiration);
                     return false;
                 }
-                else
-                {
-                    Add(key, value, slidingExpiration);
-                    return true;
-                }
+                Add (key, value, slidingExpiration);
+                return true;
             }
             finally { Monitor.Exit(syncRoot); }
         }
@@ -222,24 +206,19 @@ namespace OpenMetaverse
         {
             get
             {
-                TValue o;
                 if (!Monitor.TryEnter(syncRoot, MAX_LOCK_WAIT))
                     throw new ApplicationException("Lock could not be acquired after " + MAX_LOCK_WAIT + "ms");
                 try
                 {
-                    if (timedStorageIndex.ContainsKey(key))
-                    {
-                        TimedCacheKey<TKey> tkey = timedStorageIndex[key];
-                        o = timedStorage[tkey];
-                        timedStorage.Remove(tkey);
-                        tkey.Accessed();
-                        timedStorage.Add(tkey, o);
+                    if (timedStorageIndex.ContainsKey (key)) {
+                        var tkey = timedStorageIndex [key];
+                        var o = timedStorage [tkey];
+                        timedStorage.Remove (tkey);
+                        tkey.Accessed ();
+                        timedStorage.Add (tkey, o);
                         return o;
                     }
-                    else
-                    {
-                        throw new ArgumentException("Key not found in the cache");
-                    }
+                    throw new ArgumentException ("Key not found in the cache");
                 }
                 finally { Monitor.Exit(syncRoot); }
             }
@@ -251,32 +230,25 @@ namespace OpenMetaverse
                 throw new ApplicationException("Lock could not be acquired after " + MAX_LOCK_WAIT + "ms");
             try
             {
-                if (timedStorageIndex.ContainsKey(key))
-                {
-                    timedStorage.Remove(timedStorageIndex[key]);
-                    timedStorageIndex.Remove(key);
+                if (timedStorageIndex.ContainsKey (key)) {
+                    timedStorage.Remove (timedStorageIndex [key]);
+                    timedStorageIndex.Remove (key);
                     return true;
                 }
-                else
-                {
-                    return false;
-                }
+                return false;
             }
             finally { Monitor.Exit(syncRoot); }
         }
 
         public bool TryGetValue(TKey key, out TValue value)
         {
-            TValue o;
-
             if (!Monitor.TryEnter(syncRoot, MAX_LOCK_WAIT))
                 throw new ApplicationException("Lock could not be acquired after " + MAX_LOCK_WAIT + "ms");
             try
             {
-                if (timedStorageIndex.ContainsKey(key))
-                {
-                    TimedCacheKey<TKey> tkey = timedStorageIndex[key];
-                    o = timedStorage[tkey];
+                if (timedStorageIndex.ContainsKey(key)) {
+                    var tkey = timedStorageIndex[key];
+                    var o = timedStorage[tkey];
                     timedStorage.Remove(tkey);
                     tkey.Accessed();
                     timedStorage.Add(tkey, o);
@@ -296,17 +268,13 @@ namespace OpenMetaverse
                 throw new ApplicationException("Lock could not be acquired after " + MAX_LOCK_WAIT + "ms");
             try
             {
-                if (timedStorageIndex.ContainsKey(key))
-                {
-                    timedStorage.Remove(timedStorageIndex[key]);
-                    timedStorageIndex[key].Accessed();
-                    timedStorage.Add(timedStorageIndex[key], value);
+                if (timedStorageIndex.ContainsKey (key)) {
+                    timedStorage.Remove (timedStorageIndex [key]);
+                    timedStorageIndex [key].Accessed ();
+                    timedStorage.Add (timedStorageIndex [key], value);
                     return true;
                 }
-                else
-                {
-                    return false;
-                }
+                return false;
             }
             finally { Monitor.Exit(syncRoot); }
         }
@@ -317,17 +285,15 @@ namespace OpenMetaverse
                 throw new ApplicationException("Lock could not be acquired after " + MAX_LOCK_WAIT + "ms");
             try
             {
-                if (timedStorageIndex.ContainsKey(key))
-                {
+                if (timedStorageIndex.ContainsKey(key)) {
                     timedStorage.Remove(timedStorageIndex[key]);
                     timedStorageIndex.Remove(key);
                 }
-                else
-                {
+                else {
                     return false;
                 }
 
-                TimedCacheKey<TKey> internalKey = new TimedCacheKey<TKey>(key, DateTime.UtcNow + TimeSpan.FromSeconds(expirationSeconds));
+                var internalKey = new TimedCacheKey<TKey>(key, DateTime.UtcNow + TimeSpan.FromSeconds(expirationSeconds));
                 timedStorage.Add(internalKey, value);
                 timedStorageIndex.Add(key, internalKey);
                 return true;
@@ -341,17 +307,15 @@ namespace OpenMetaverse
                 throw new ApplicationException("Lock could not be acquired after " + MAX_LOCK_WAIT + "ms");
             try
             {
-                if (timedStorageIndex.ContainsKey(key))
-                {
+                if (timedStorageIndex.ContainsKey(key)) {
                     timedStorage.Remove(timedStorageIndex[key]);
                     timedStorageIndex.Remove(key);
                 }
-                else
-                {
+                else {
                     return false;
                 }
 
-                TimedCacheKey<TKey> internalKey = new TimedCacheKey<TKey>(key, slidingExpiration);
+                var internalKey = new TimedCacheKey<TKey>(key, slidingExpiration);
                 timedStorage.Add(internalKey, value);
                 timedStorageIndex.Add(key, internalKey);
                 return true;
@@ -362,21 +326,30 @@ namespace OpenMetaverse
         public void CopyTo(Array array, int startIndex)
         {
             // Error checking
-            if (array == null) { throw new ArgumentNullException("array"); }
+            if (array == null) {
+                throw new ArgumentNullException("array");
+            }
 
-            if (startIndex < 0) { throw new ArgumentOutOfRangeException("startIndex", "startIndex must be >= 0."); }
+            if (startIndex < 0) {
+                throw new ArgumentOutOfRangeException("startIndex", "startIndex must be >= 0."); 
+            }
 
-            if (array.Rank > 1) { throw new ArgumentException("array must be of Rank 1 (one-dimensional)", "array"); }
-            if (startIndex >= array.Length) { throw new ArgumentException("startIndex must be less than the length of the array.", "startIndex"); }
-            if (Count > array.Length - startIndex) { throw new ArgumentException("There is not enough space from startIndex to the end of the array to accomodate all items in the cache."); }
+            if (array.Rank > 1) { 
+                throw new ArgumentException("array must be of Rank 1 (one-dimensional)", "array"); 
+            }
+            if (startIndex >= array.Length) { 
+                throw new ArgumentException("startIndex must be less than the length of the array.", "startIndex"); 
+            }
+            if (Count > array.Length - startIndex) {
+                throw new ArgumentException("There is not enough space from startIndex to the end of the array to accomodate all items in the cache."); 
+            }
 
             // Copy the data to the array (in a thread-safe manner)
             if (!Monitor.TryEnter(syncRoot, MAX_LOCK_WAIT))
                 throw new ApplicationException("Lock could not be acquired after " + MAX_LOCK_WAIT + "ms");
             try
             {
-                foreach (object o in timedStorage)
-                {
+                foreach (var o in timedStorage) {
                     array.SetValue(o, startIndex);
                     startIndex++;
                 }
@@ -391,7 +364,7 @@ namespace OpenMetaverse
         /// <summary>
         /// Purges expired objects from the cache. Called automatically by the purge timer.
         /// </summary>
-        private void PurgeCache(object sender, System.Timers.ElapsedEventArgs e)
+        void PurgeCache(object sender, System.Timers.ElapsedEventArgs e)
         {
             // Only let one thread purge at once - a buildup could cause a crash
             // This could cause the purge to be delayed while there are lots of read/write ops 
@@ -399,7 +372,7 @@ namespace OpenMetaverse
             if (!Monitor.TryEnter(isPurging))
                 return;
 
-            DateTime signalTime = DateTime.UtcNow;
+            var signalTime = DateTime.UtcNow;
 
             try
             {
@@ -408,26 +381,21 @@ namespace OpenMetaverse
                     return;
                 try
                 {
-                    Lazy<List<object>> expiredItems = new Lazy<List<object>>();
+                    var expiredItems = new Lazy<List<object>>();
 
-                    foreach (TimedCacheKey<TKey> timedKey in timedStorage.Keys)
+                    foreach (var timedKey in timedStorage.Keys)
                     {
-                        if (timedKey.ExpirationDate < signalTime)
-                        {
+                        if (timedKey.ExpirationDate < signalTime) {
                             // Mark the object for purge
                             expiredItems.Value.Add(timedKey.Key);
-                        }
-                        else
-                        {
+                        } else {
                             break;
                         }
                     }
 
-                    if (expiredItems.IsValueCreated)
-                    {
-                        foreach (TKey key in expiredItems.Value)
-                        {
-                            TimedCacheKey<TKey> timedKey = timedStorageIndex[key];
+                    if (expiredItems.IsValueCreated) {
+                        foreach (TKey key in expiredItems.Value) {
+                            var timedKey = timedStorageIndex[key];
                             timedStorageIndex.Remove(timedKey.Key);
                             timedStorage.Remove(timedKey);
                         }
