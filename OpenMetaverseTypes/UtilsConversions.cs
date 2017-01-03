@@ -35,8 +35,7 @@ namespace OpenMetaverse
     {
         #region String Arrays
 
-        private static readonly string[] _AssetTypeNames = new string[]
-        {
+        static readonly string[] _AssetTypeNames = {
             "texture",    //  0
 	        "sound",      //  1
 	        "callcard",   //  2
@@ -46,77 +45,76 @@ namespace OpenMetaverse
 	        "object",     //  6
 	        "notecard",   //  7
 	        "category",   //  8
-	        String.Empty, //  9
+	        string.Empty, //  9
 	        "lsltext",    // 10
 	        "lslbyte",    // 11
 	        "txtr_tga",   // 12
 	        "bodypart",   // 13
-	        String.Empty, // 14
-	        String.Empty, // 15
-	        String.Empty, // 16
+	        string.Empty, // 14
+	        string.Empty, // 15
+	        string.Empty, // 16
 	        "snd_wav",    // 17
 	        "img_tga",    // 18
 	        "jpeg",       // 19
 	        "animatn",    // 20
 	        "gesture",    // 21
 	        "simstate",   // 22
-            String.Empty, // 23
+            string.Empty, // 23
             "link",       // 24
             "linkfolder", // 25
             "marketplacefolder", // 26
-            String.Empty, // 27
-            String.Empty, // 28
-            String.Empty, // 29
-            String.Empty, // 30
-            String.Empty, // 31
-            String.Empty, // 32
-            String.Empty, // 33
-            String.Empty, // 34
-            String.Empty, // 35
-            String.Empty, // 36
-            String.Empty, // 37
-            String.Empty, // 38
-            String.Empty, // 39
-            String.Empty, // 40
-            String.Empty, // 41
-            String.Empty, // 42
-            String.Empty, // 43
-            String.Empty, // 44
-            String.Empty, // 45
-            String.Empty, // 46
-            String.Empty, // 47
-            String.Empty, // 48
-            "mesh",       // 49
+            string.Empty, // 27
+            string.Empty, // 28
+            string.Empty, // 29
+            string.Empty, // 30
+            string.Empty, // 31
+            string.Empty, // 32
+            string.Empty, // 33
+            string.Empty, // 34
+            string.Empty, // 35
+            string.Empty, // 36
+            string.Empty, // 37
+            string.Empty, // 38
+            string.Empty, // 39
+            string.Empty, // 40
+            string.Empty, // 41
+            string.Empty, // 42
+            string.Empty, // 43
+            string.Empty, // 44
+            string.Empty, // 45
+            string.Empty, // 46
+            string.Empty, // 47
+            string.Empty, // 48
+            "mesh"        // 49
         };
 
-        private static readonly string[] _FolderTypeNames = new string[]
-        {
+        static readonly string[] _FolderTypeNames = {
             "texture",    //  0
             "sound",      //  1
             "callcard",   //  2
             "landmark",   //  3
-            String.Empty, //  4
+            string.Empty, //  4
             "clothing",   //  5
             "object",     //  6
             "notecard",   //  7
             "root_inv",   //  8
-            String.Empty, //  9
+            string.Empty, //  9
             "lsltext",    // 10
-            String.Empty, // 11
-            String.Empty, // 12
+            string.Empty, // 11
+            string.Empty, // 12
             "bodypart",   // 13
             "trash",      // 14
             "snapshot",   // 15
             "lstndfnd",   // 16
-            String.Empty, // 17
-            String.Empty, // 18
-            String.Empty, // 19
+            string.Empty, // 17
+            string.Empty, // 18
+            string.Empty, // 19
             "animatn",    // 20
             "gesture",    // 21
-            String.Empty, // 22
+            string.Empty, // 22
             "favorite",   // 23
-            String.Empty, // 24
-            String.Empty, // 25
+            string.Empty, // 24
+            string.Empty, // 25
             "ensemble",   // 26
             "ensemble",   // 27
             "ensemble",   // 28
@@ -145,46 +143,43 @@ namespace OpenMetaverse
             "outbox",     // 51
             "basic_rt",   // 52
             "merchant",   // 53
-            "stock",      // 54
+            "stock"       // 54
         };
 
-        private static readonly string[] _InventoryTypeNames = new string[]
-        {
+        static readonly string[] _InventoryTypeNames = {
             "texture",    //  0
 	        "sound",      //  1
 	        "callcard",   //  2
 	        "landmark",   //  3
-	        String.Empty, //  4
-	        String.Empty, //  5
+	        string.Empty, //  4
+	        string.Empty, //  5
 	        "object",     //  6
 	        "notecard",   //  7
 	        "category",   //  8
 	        "root",       //  9
 	        "script",     // 10
-	        String.Empty, // 11
-	        String.Empty, // 12
-	        String.Empty, // 13
-	        String.Empty, // 14
+	        string.Empty, // 11
+	        string.Empty, // 12
+	        string.Empty, // 13
+	        string.Empty, // 14
 	        "snapshot",   // 15
-	        String.Empty, // 16
+	        string.Empty, // 16
 	        "attach",     // 17
 	        "wearable",   // 18
 	        "animation",  // 19
 	        "gesture",    // 20
-            String.Empty, // 21
+            string.Empty, // 21
             "mesh"        // 22
         };
 
-        private static readonly string[] _SaleTypeNames = new string[]
-        {
+        static readonly string[] _SaleTypeNames = {
             "not",
             "orig",
             "copy",
             "cntn"
         };
 
-        private static readonly string[] _AttachmentPointNames = new string[]
-        {
+        static readonly string[] _AttachmentPointNames = {
             string.Empty,
             "ATTACH_CHEST",
 	        "ATTACH_HEAD",
@@ -287,7 +282,7 @@ namespace OpenMetaverse
         public static int BytesToInt(byte[] bytes, int pos)
         {
             if (bytes.Length < pos + 4) return 0;
-            return (int)(bytes[pos + 0] + (bytes[pos + 1] << 8) + (bytes[pos + 2] << 16) + (bytes[pos + 3] << 24));
+            return (bytes[pos + 0] + (bytes[pos + 1] << 8) + (bytes[pos + 2] << 16) + (bytes[pos + 3] << 24));
         }
 
         /// <summary>
@@ -325,8 +320,8 @@ namespace OpenMetaverse
         public static long BytesToInt64(byte[] bytes, int pos)
         {
             if (bytes.Length < pos + 8) return 0;
-            return (long)
-                ((long)bytes[pos + 0] +
+            return 
+                (bytes[pos + 0] +
                 ((long)bytes[pos + 1] << 8) +
                 ((long)bytes[pos + 2] << 16) +
                 ((long)bytes[pos + 3] << 24) +
@@ -397,8 +392,8 @@ namespace OpenMetaverse
         public static ulong BytesToUInt64(byte[] bytes)
         {
             if (bytes.Length < 8) return 0;
-            return (ulong)
-                ((ulong)bytes[0] +
+            return 
+                (bytes[0] +
                 ((ulong)bytes[1] << 8) +
                 ((ulong)bytes[2] << 16) +
                 ((ulong)bytes[3] << 24) +
@@ -426,10 +421,7 @@ namespace OpenMetaverse
                 Array.Reverse(newBytes, 0, 4);
                 return BitConverter.ToSingle(newBytes, 0);
             }
-            else
-            {
-                return BitConverter.ToSingle(bytes, pos);
-            }
+            return BitConverter.ToSingle(bytes, pos);
         }
 
         public static double BytesToDouble(byte[] bytes, int pos)
@@ -441,10 +433,7 @@ namespace OpenMetaverse
                 Array.Reverse(newBytes, 0, 8);
                 return BitConverter.ToDouble(newBytes, 0);
             }
-            else
-            {
-                return BitConverter.ToDouble(bytes, pos);
-            }
+            return BitConverter.ToDouble(bytes, pos);
         }
 
         #endregion BytesTo
@@ -690,7 +679,7 @@ namespace OpenMetaverse
 
         private static string GetString(byte[] bytes, int index, int count)
         {
-            string cnv = UTF8Encoding.UTF8.GetString(bytes, index, count);
+            string cnv = Encoding.UTF8.GetString(bytes, index, count);
             return InternStrings ? string.Intern(cnv) : cnv;
         }
 
@@ -726,7 +715,7 @@ namespace OpenMetaverse
                 if (i != 0)
                     output.Append('\n');
 
-                if (!String.IsNullOrEmpty(fieldName))
+                if (!string.IsNullOrEmpty(fieldName))
                 {
                     output.Append(fieldName);
                     output.Append(": ");
@@ -739,7 +728,7 @@ namespace OpenMetaverse
                         if (j != 0)
                             output.Append(' ');
 
-                        output.Append(String.Format("{0:X2}", bytes[i + j]));
+                        output.Append(string.Format("{0:X2}", bytes[i + j]));
                     }
                 }
             }
@@ -754,9 +743,9 @@ namespace OpenMetaverse
         /// <returns>A null-terminated UTF8 byte array</returns>
         public static byte[] StringToBytes(string str)
         {
-            if (String.IsNullOrEmpty(str)) { return Utils.EmptyBytes; }
-            if (!str.EndsWith("\0")) { str += "\0"; }
-            return System.Text.UTF8Encoding.UTF8.GetBytes(str);
+            if (string.IsNullOrEmpty(str)) { return EmptyBytes; }
+            if (!str.EndsWith ("\0", StringComparison.Ordinal)) { str += "\0"; }
+            return Encoding.UTF8.GetBytes(str);
         }
 
         /// <summary>
@@ -770,8 +759,8 @@ namespace OpenMetaverse
         {
             if (handleDirty)
             {
-                if (String.IsNullOrEmpty(hexString))
-                    return Utils.EmptyBytes;
+                if (string.IsNullOrEmpty(hexString))
+                    return EmptyBytes;
 
                 StringBuilder stripped = new StringBuilder(hexString.Length);
                 char c;
@@ -811,22 +800,19 @@ namespace OpenMetaverse
         /// </summary>
         /// <param name="c">Character to test</param>
         /// <returns>true if hex digit, false if not</returns>
-        private static bool IsHexDigit(Char c)
+        static bool IsHexDigit(char c)
         {
             const int numA = 65;
             const int num0 = 48;
 
             int numChar;
 
-            c = Char.ToUpper(c);
+            c = char.ToUpper(c);
             numChar = Convert.ToInt32(c);
 
             if (numChar >= numA && numChar < (numA + 6))
                 return true;
-            else if (numChar >= num0 && numChar < (num0 + 10))
-                return true;
-            else
-                return false;
+            return numChar >= num0 && numChar < (num0 + 10);
         }
 
         /// <summary>
@@ -834,11 +820,11 @@ namespace OpenMetaverse
         /// </summary>
         /// <param name="hex">1 or 2 character string</param>
         /// <returns>byte</returns>
-        private static byte HexToByte(string hex)
+        static byte HexToByte(string hex)
         {
             if (hex.Length > 2 || hex.Length <= 0)
                 throw new ArgumentException("hex must be 1 or 2 characters in length");
-            byte newByte = Byte.Parse(hex, System.Globalization.NumberStyles.HexNumber);
+            byte newByte = byte.Parse(hex, System.Globalization.NumberStyles.HexNumber);
             return newByte;
         }
 
@@ -855,12 +841,12 @@ namespace OpenMetaverse
         /// <returns>A single byte representing the original float value</returns>
         public static byte FloatToByte(float val, float lower, float upper)
         {
-            val = Utils.Clamp(val, lower, upper);
+            val = Clamp(val, lower, upper);
             // Normalize the value
             val -= lower;
             val /= (upper - lower);
 
-            return (byte)Math.Floor(val * (float)byte.MaxValue);
+            return (byte)Math.Floor(val * byte.MaxValue);
         }
 
         /// <summary>
@@ -873,8 +859,7 @@ namespace OpenMetaverse
         /// <returns>A float value inclusively between lower and upper</returns>
         public static float ByteToFloat(byte[] bytes, int pos, float lower, float upper)
         {
-            if (bytes.Length <= pos) return 0;
-            return ByteToFloat(bytes[pos], lower, upper);
+            return bytes.Length <= pos ? 0 : ByteToFloat(bytes[pos], lower, upper);
         }
 
         /// <summary>
@@ -886,9 +871,9 @@ namespace OpenMetaverse
         /// <returns>A float value inclusively between lower and upper</returns>
         public static float ByteToFloat(byte val, float lower, float upper)
         {
-            const float ONE_OVER_BYTEMAX = 1.0f / (float)byte.MaxValue;
+            const float ONE_OVER_BYTEMAX = 1.0f / byte.MaxValue;
 
-            float fval = (float)val * ONE_OVER_BYTEMAX;
+            float fval = val * ONE_OVER_BYTEMAX;
             float delta = (upper - lower);
             fval *= delta;
             fval += lower;
@@ -909,9 +894,9 @@ namespace OpenMetaverse
 
         public static float UInt16ToFloat(ushort val, float lower, float upper)
         {
-            const float ONE_OVER_U16_MAX = 1.0f / (float)UInt16.MaxValue;
+            const float ONE_OVER_U16_MAX = 1.0f / ushort.MaxValue;
 
-            float fval = (float)val * ONE_OVER_U16_MAX;
+            float fval = val * ONE_OVER_U16_MAX;
             float delta = upper - lower;
             fval *= delta;
             fval += lower;
@@ -929,7 +914,7 @@ namespace OpenMetaverse
             float delta = upper - lower;
             value -= lower;
             value /= delta;
-            value *= (float)UInt16.MaxValue;
+            value *= ushort.MaxValue;
 
             return (ushort)value;
         }
@@ -947,7 +932,7 @@ namespace OpenMetaverse
         /// <returns>True if the parse was successful, otherwise false</returns>
         public static bool TryParseSingle(string s, out float result)
         {
-            return Single.TryParse(s, System.Globalization.NumberStyles.Float, EnUsCulture.NumberFormat, out result);
+            return float.TryParse(s, System.Globalization.NumberStyles.Float, EnUsCulture.NumberFormat, out result);
         }
 
         /// <summary>
@@ -961,7 +946,7 @@ namespace OpenMetaverse
         {
             // NOTE: Double.TryParse can't parse Double.[Min/Max]Value.ToString(), see:
             // http://blogs.msdn.com/bclteam/archive/2006/05/24/598169.aspx
-            return Double.TryParse(s, System.Globalization.NumberStyles.Float, EnUsCulture.NumberFormat, out result);
+            return double.TryParse(s, System.Globalization.NumberStyles.Float, EnUsCulture.NumberFormat, out result);
         }
 
         /// <summary>
@@ -972,7 +957,7 @@ namespace OpenMetaverse
         /// <returns>True if the parse was successful, otherwise false</returns>
         public static bool TryParseHex(string s, out uint result)
         {
-            return UInt32.TryParse(s, System.Globalization.NumberStyles.HexNumber, EnUsCulture.NumberFormat, out result);
+            return uint.TryParse(s, System.Globalization.NumberStyles.HexNumber, EnUsCulture.NumberFormat, out result);
         }
 
         #endregion TryParse
@@ -995,7 +980,7 @@ namespace OpenMetaverse
             FieldInfo fieldInfo = type.GetField(value.ToString());
 
             // Find extended attributes, if any
-            EnumInfoAttribute[] attribs = (EnumInfoAttribute[])fieldInfo.GetCustomAttributes(typeof(EnumInfoAttribute), false);
+            var attribs = (EnumInfoAttribute[])fieldInfo.GetCustomAttributes(typeof(EnumInfoAttribute), false);
 
             return attribs.Length > 0 ? attribs[0].Text : value.ToString();
         }
@@ -1147,7 +1132,7 @@ namespace OpenMetaverse
         /// <returns>A 64-bit integer containing the two 32-bit input values</returns>
         public static ulong UIntsToLong(uint a, uint b)
         {
-            return ((ulong)a << 32) | (ulong)b;
+            return ((ulong)a << 32) | b;
         }
 
         /// <summary>
@@ -1167,7 +1152,7 @@ namespace OpenMetaverse
         /// </summary>
         /// <param name="address">IP address to convert</param>
         /// <returns>32-bit unsigned integer holding the IP address bits</returns>
-        public static uint IPToUInt(System.Net.IPAddress address)
+        public static uint IPToUInt(IPAddress address)
         {
             byte[] bytes = address.GetAddressBytes();
             return (uint)((bytes[3] << 24) + (bytes[2] << 16) + (bytes[1] << 8) + bytes[0]);
@@ -1252,19 +1237,17 @@ namespace OpenMetaverse
                 result = (T)Enum.Parse(t, strType, true);
                 return true;
             }
-            else
+
+            foreach (string value in Enum.GetNames(typeof(T)))
             {
-                foreach (string value in Enum.GetNames(typeof(T)))
+                if (value.Equals(strType, StringComparison.OrdinalIgnoreCase))
                 {
-                    if (value.Equals(strType, StringComparison.OrdinalIgnoreCase))
-                    {
-                        result = (T)Enum.Parse(typeof(T), value);
-                        return true;
-                    }
+                    result = (T)Enum.Parse(typeof(T), value);
+                    return true;
                 }
-                result = default(T);
-                return false;
             }
+            result = default(T);
+            return false;
         }
 
         /// <summary>
@@ -1279,7 +1262,7 @@ namespace OpenMetaverse
 
         /// <summary>
         /// Attempts to convert a string representation of a hostname or IP
-        /// address to a <seealso cref="System.Net.IPAddress"/>
+        /// address to a <seealso cref="IPAddress"/>
         /// </summary>
         /// <param name="hostname">Hostname to convert to an IPAddress</param>
         /// <returns>Converted IP address object, or null if the conversion

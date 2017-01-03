@@ -48,7 +48,7 @@ namespace OpenMetaverse
         /// <example>UUID("11f8aa9c-b071-4242-836b-13b7abe0d489")</example>
         public UUID(string val)
         {
-            if (String.IsNullOrEmpty(val))
+            if (string.IsNullOrEmpty(val))
                 Guid = new Guid();
             else
                 Guid = new Guid(val);
@@ -71,7 +71,7 @@ namespace OpenMetaverse
         /// <param name="pos">Beginning offset in the array</param>
         public UUID(byte[] source, int pos)
         {
-            Guid = UUID.Zero.Guid;
+            Guid = Zero.Guid;
             FromBytes(source, pos);
         }
 
@@ -118,8 +118,8 @@ namespace OpenMetaverse
         public void FromBytes(byte[] source, int pos)
         {
             int a = (source[pos + 0] << 24) | (source[pos + 1] << 16) | (source[pos + 2] << 8) | source[pos + 3];
-            short b = (short)((source[pos + 4] << 8) | source[pos + 5]);
-            short c = (short)((source[pos + 6] << 8) | source[pos + 7]);
+            var b = (short)((source[pos + 4] << 8) | source[pos + 5]);
+            var c = (short)((source[pos + 6] << 8) | source[pos + 7]);
 
             Guid = new Guid(a, b, c, source[pos + 8], source[pos + 9], source[pos + 10], source[pos + 11],
                 source[pos + 12], source[pos + 13], source[pos + 14], source[pos + 15]);
@@ -181,8 +181,8 @@ namespace OpenMetaverse
         {
             byte[] bytes = Guid.ToByteArray();
 
-            return (ulong)
-                ((ulong)bytes[8] +
+            return 
+                (bytes[8] +
                 ((ulong)bytes[9] << 8) +
                 ((ulong)bytes[10] << 16) +
                 ((ulong)bytes[12] << 24) +
@@ -218,11 +218,11 @@ namespace OpenMetaverse
         /// <example>UUID.TryParse("11f8aa9c-b071-4242-836b-13b7abe0d489", result)</example>
         public static bool TryParse(string val, out UUID result)
         {
-            if (String.IsNullOrEmpty(val) ||
+            if (string.IsNullOrEmpty(val) ||
                 (val[0] == '{' && val.Length != 38) ||
                 (val.Length != 36 && val.Length != 32))
             {
-                result = UUID.Zero;
+                result = Zero;
                 return false;
             }
 
@@ -233,7 +233,7 @@ namespace OpenMetaverse
             }
             catch (Exception)
             {
-                result = UUID.Zero;
+                result = Zero;
                 return false;
             }
         }
@@ -280,13 +280,13 @@ namespace OpenMetaverse
         /// <summary>
         /// Comparison function
         /// </summary>
-        /// <param name="o">An object to compare to this UUID</param>
+        /// <param name="obj">An object to compare to this UUID</param>
         /// <returns>True if the object is a UUID and both UUIDs are equal</returns>
-        public override bool Equals(object o)
+        public override bool Equals(object obj)
         {
-            if (!(o is UUID)) return false;
+            if (!(obj is UUID)) return false;
 
-            UUID uuid = (UUID)o;
+            var uuid = (UUID)obj;
             return Guid == uuid.Guid;
         }
 

@@ -34,6 +34,8 @@ namespace OpenMetaverse
     [StructLayout(LayoutKind.Sequential)]
     public struct Quaternion : IEquatable<Quaternion>
     {
+        const float EPSILON = 0.0000001f;   // floating point comparison equality
+
         /// <summary>X value</summary>
         public float X;
         /// <summary>Y value</summary>
@@ -215,9 +217,9 @@ namespace OpenMetaverse
         /// writing. Must be at least 12 bytes before the end of the array</param>
         public void ToBytes(byte[] dest, int pos)
         {
-            float norm = (float)Math.Sqrt(X * X + Y * Y + Z * Z + W * W);
+            var norm = (float)Math.Sqrt(X * X + Y * Y + Z * Z + W * W);
 
-            if (norm != 0f)
+            if (Math.Abs (norm) > EPSILON)
             {
                 norm = 1f / norm;
 
@@ -244,7 +246,7 @@ namespace OpenMetaverse
             }
             else
             {
-                throw new InvalidOperationException(String.Format(
+                throw new InvalidOperationException(string.Format(
                     "Quaternion {0} normalized to zero", ToString()));
             }
         }
@@ -261,30 +263,30 @@ namespace OpenMetaverse
             pitch = 0f;
             yaw = 0f;
 
-            Quaternion t = new Quaternion(this.X * this.X, this.Y * this.Y, this.Z * this.Z, this.W * this.W);
+            var t = new Quaternion(X * X, Y * Y, Z * Z, W * W);
 
             float m = (t.X + t.Y + t.Z + t.W);
             if (Math.Abs(m) < 0.001d) return;
-            float n = 2 * (this.Y * this.W + this.X * this.Z);
+            float n = 2 * (Y * W + X * Z);
             float p = m * m - n * n;
 
             if (p > 0f)
             {
-                roll = (float)Math.Atan2(2.0f * (this.X * this.W - this.Y * this.Z), (-t.X - t.Y + t.Z + t.W));
+                roll = (float)Math.Atan2(2.0f * (X * W - Y * Z), (-t.X - t.Y + t.Z + t.W));
                 pitch = (float)Math.Atan2(n, Math.Sqrt(p));
-                yaw = (float)Math.Atan2(2.0f * (this.Z * this.W - this.X * this.Y), t.X - t.Y - t.Z + t.W);
+                yaw = (float)Math.Atan2(2.0f * (Z * W - X * Y), t.X - t.Y - t.Z + t.W);
             }
             else if (n > 0f)
             {
                 roll = 0f;
                 pitch = (float)(Math.PI / 2d);
-                yaw = (float)Math.Atan2((this.Z * this.W + this.X * this.Y), 0.5f - t.X - t.Y);
+                yaw = (float)Math.Atan2((Z * W + X * Y), 0.5f - t.X - t.Y);
             }
             else
             {
                 roll = 0f;
                 pitch = -(float)(Math.PI / 2d);
-                yaw = (float)Math.Atan2((this.Z * this.W + this.X * this.Y), 0.5f - t.X - t.Z);
+                yaw = (float)Math.Atan2((Z * W + X * Y), 0.5f - t.X - t.Z);
             }
 
             //float sqx = X * X;
@@ -327,7 +329,7 @@ namespace OpenMetaverse
         {
             Quaternion q = Normalize(this);
 
-            float sin = (float)Math.Sqrt(1.0f - q.W * q.W);
+            var sin = (float)Math.Sqrt(1.0f - q.W * q.W);
             if (sin >= 0.001)
             {
                 float invSin = 1.0f / sin;
@@ -375,7 +377,7 @@ namespace OpenMetaverse
         /// </summary>
         public static Quaternion CreateFromAxisAngle(float axisX, float axisY, float axisZ, float angle)
         {
-            Vector3 axis = new Vector3(axisX, axisY, axisZ);
+            var axis = new Vector3(axisX, axisY, axisZ);
             return CreateFromAxisAngle(axis, angle);
         }
 
@@ -391,15 +393,15 @@ namespace OpenMetaverse
             axis = Vector3.Normalize(axis);
 
             angle *= 0.5f;
-            float c = (float)Math.Cos(angle);
-            float s = (float)Math.Sin(angle);
+            var c = (float)Math.Cos(angle);
+            var s = (float)Math.Sin(angle);
 
             q.X = axis.X * s;
             q.Y = axis.Y * s;
             q.Z = axis.Z * s;
             q.W = c;
 
-            return Quaternion.Normalize(q);
+            return Normalize (q);
         }
 
         /// <summary>
@@ -446,10 +448,10 @@ namespace OpenMetaverse
         public static Quaternion CreateFromRotationMatrix(Matrix4 matrix)
         {
             float num8 = (matrix.M11 + matrix.M22) + matrix.M33;
-            Quaternion quaternion = new Quaternion();
+            var quaternion = new Quaternion();
             if (num8 > 0f)
             {
-                float num = (float)Math.Sqrt((double)(num8 + 1f));
+                var num = (float)Math.Sqrt(num8 + 1f);
                 quaternion.W = num * 0.5f;
                 num = 0.5f / num;
                 quaternion.X = (matrix.M23 - matrix.M32) * num;
@@ -459,7 +461,7 @@ namespace OpenMetaverse
             }
             if ((matrix.M11 >= matrix.M22) && (matrix.M11 >= matrix.M33))
             {
-                float num7 = (float)Math.Sqrt((double)(((1f + matrix.M11) - matrix.M22) - matrix.M33));
+                var num7 = (float)Math.Sqrt(((1f + matrix.M11) - matrix.M22) - matrix.M33);
                 float num4 = 0.5f / num7;
                 quaternion.X = 0.5f * num7;
                 quaternion.Y = (matrix.M12 + matrix.M21) * num4;
@@ -469,7 +471,7 @@ namespace OpenMetaverse
             }
             if (matrix.M22 > matrix.M33)
             {
-                float num6 = (float)Math.Sqrt((double)(((1f + matrix.M22) - matrix.M11) - matrix.M33));
+                var num6 = (float)Math.Sqrt((((1f + matrix.M22) - matrix.M11) - matrix.M33));
                 float num3 = 0.5f / num6;
                 quaternion.X = (matrix.M21 + matrix.M12) * num3;
                 quaternion.Y = 0.5f * num6;
@@ -477,7 +479,7 @@ namespace OpenMetaverse
                 quaternion.W = (matrix.M31 - matrix.M13) * num3;
                 return quaternion;
             }
-            float num5 = (float)Math.Sqrt((double)(((1f + matrix.M33) - matrix.M11) - matrix.M22));
+            var num5 = (float)Math.Sqrt((((1f + matrix.M33) - matrix.M11) - matrix.M22));
             float num2 = 0.5f / num5;
             quaternion.X = (matrix.M31 + matrix.M13) * num2;
             quaternion.Y = (matrix.M32 + matrix.M23) * num2;
@@ -489,10 +491,10 @@ namespace OpenMetaverse
 
         public static Quaternion Divide(Quaternion q1, Quaternion q2)
         {
-            return Quaternion.Inverse(q1) * q2;
+            return Inverse (q1) * q2;
         }
 
-        public static float Dot(Quaternion q1, Quaternion q2)
+        public static float Dot (Quaternion q1, Quaternion q2)
         {
             return (q1.X * q2.X) + (q1.Y * q2.Y) + (q1.Z * q2.Z) + (q1.W * q2.W);
         }
@@ -504,7 +506,7 @@ namespace OpenMetaverse
         {
             float norm = quaternion.LengthSquared();
 
-            if (norm == 0f)
+            if (Math.Abs (norm) < EPSILON)
             {
                 quaternion.X = quaternion.Y = quaternion.Z = quaternion.W = 0f;
             }
@@ -543,7 +545,7 @@ namespace OpenMetaverse
                 if ((1f - angle) >= 0.05f)
                 {
                     // slerp
-                    float theta = (float)Math.Acos(angle);
+                    var theta = (float)Math.Acos(angle);
                     float invsintheta = 1f / (float)Math.Sin(theta);
                     scale = (float)Math.Sin(theta * (1f - amount)) * invsintheta;
                     invscale = (float)Math.Sin(theta * amount) * invsintheta;
@@ -634,22 +636,18 @@ namespace OpenMetaverse
         public static Quaternion Parse(string val)
         {
             char[] splitChar = { ',' };
-            string[] split = val.Replace("<", String.Empty).Replace(">", String.Empty).Split(splitChar);
-            if (split.Length == 3)
-            {
-                return new Quaternion(
-                    float.Parse(split[0].Trim(), Utils.EnUsCulture),
-                    float.Parse(split[1].Trim(), Utils.EnUsCulture),
-                    float.Parse(split[2].Trim(), Utils.EnUsCulture));
+            string[] split = val.Replace("<", string.Empty).Replace(">", string.Empty).Split(splitChar);
+            if (split.Length == 3) {
+                return new Quaternion (
+                    float.Parse (split [0].Trim (), Utils.EnUsCulture),
+                    float.Parse (split [1].Trim (), Utils.EnUsCulture),
+                    float.Parse (split [2].Trim (), Utils.EnUsCulture));
             }
-            else
-            {
-                return new Quaternion(
-                    float.Parse(split[0].Trim(), Utils.EnUsCulture),
-                    float.Parse(split[1].Trim(), Utils.EnUsCulture),
-                    float.Parse(split[2].Trim(), Utils.EnUsCulture),
-                    float.Parse(split[3].Trim(), Utils.EnUsCulture));
-            }
+            return new Quaternion (
+                float.Parse (split [0].Trim (), Utils.EnUsCulture),
+                float.Parse (split [1].Trim (), Utils.EnUsCulture),
+                float.Parse (split [2].Trim (), Utils.EnUsCulture),
+                float.Parse (split [3].Trim (), Utils.EnUsCulture));
         }
 
         public static bool TryParse(string val, out Quaternion result)
@@ -677,10 +675,10 @@ namespace OpenMetaverse
 
         public bool Equals(Quaternion other)
         {
-            return W == other.W
-                && X == other.X
-                && Y == other.Y
-                && Z == other.Z;
+            return Math.Abs (W - other.W) < EPSILON &&
+                       Math.Abs (X - other.X) < EPSILON &&
+                       Math.Abs (Y - other.Y) < EPSILON &&
+                       Math.Abs (Z - other.Z) < EPSILON;
         }
 
         public override int GetHashCode()
@@ -690,7 +688,7 @@ namespace OpenMetaverse
 
         public override string ToString()
         {
-            return String.Format(Utils.EnUsCulture, "<{0}, {1}, {2}, {3}>", X, Y, Z, W);
+            return string.Format(Utils.EnUsCulture, "<{0}, {1}, {2}, {3}>", X, Y, Z, W);
         }
 
         /// <summary>
@@ -700,10 +698,10 @@ namespace OpenMetaverse
         /// <returns>Raw string representation of the quaternion</returns>
         public string ToRawString()
         {
-            CultureInfo enUs = new CultureInfo("en-us");
+            var enUs = new CultureInfo("en-us");
             enUs.NumberFormat.NumberDecimalDigits = 3;
 
-            return String.Format(enUs, "{0} {1} {2} {3}", X, Y, Z, W);
+            return string.Format(enUs, "{0} {1} {2} {3}", X, Y, Z, W);
         }
 
         #endregion Overrides

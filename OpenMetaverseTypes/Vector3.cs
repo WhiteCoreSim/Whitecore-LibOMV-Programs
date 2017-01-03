@@ -37,6 +37,8 @@ namespace OpenMetaverse
     [StructLayout(LayoutKind.Sequential)]
     public struct Vector3 : IComparable<Vector3>, IEquatable<Vector3>
     {
+        const float EPSILON = 0.0000001f;   // foalting point comparision equality
+
         /// <summary>X value</summary>
         public float X;
         /// <summary>Y value</summary>
@@ -348,11 +350,11 @@ namespace OpenMetaverse
         public static Vector3 Parse(string val)
         {
             char[] splitChar = { ',' };
-            string[] split = val.Replace("<", String.Empty).Replace(">", String.Empty).Split(splitChar);
+            string[] split = val.Replace("<", string.Empty).Replace(">", string.Empty).Split(splitChar);
             return new Vector3(
-                Single.Parse(split[0].Trim(), Utils.EnUsCulture),
-                Single.Parse(split[1].Trim(), Utils.EnUsCulture),
-                Single.Parse(split[2].Trim(), Utils.EnUsCulture));
+                float.Parse(split[0].Trim(), Utils.EnUsCulture),
+                float.Parse(split[1].Trim(), Utils.EnUsCulture),
+                float.Parse(split[2].Trim(), Utils.EnUsCulture));
         }
 
         public static bool TryParse(string val, out Vector3 result)
@@ -364,7 +366,7 @@ namespace OpenMetaverse
             }
             catch (Exception)
             {
-                result = Vector3.Zero;
+                result = Zero;
                 return false;
             }
         }
@@ -453,7 +455,7 @@ namespace OpenMetaverse
         /// <returns>A string representation of the vector</returns>
         public override string ToString()
         {
-            return String.Format(Utils.EnUsCulture, "<{0}, {1}, {2}>", X, Y, Z);
+            return string.Format(Utils.EnUsCulture, "<{0}, {1}, {2}>", X, Y, Z);
         }
 
         /// <summary>
@@ -463,10 +465,10 @@ namespace OpenMetaverse
         /// <returns>Raw string representation of the vector</returns>
         public string ToRawString()
         {
-            CultureInfo enUs = new CultureInfo("en-us");
+            var enUs = new CultureInfo("en-us");
             enUs.NumberFormat.NumberDecimalDigits = 3;
 
-            return String.Format(enUs, "{0} {1} {2}", X, Y, Z);
+            return string.Format(enUs, "{0} {1} {2}", X, Y, Z);
         }
 
         #endregion Overrides
@@ -475,9 +477,9 @@ namespace OpenMetaverse
 
         public static bool operator ==(Vector3 value1, Vector3 value2)
         {
-            return value1.X == value2.X
-                && value1.Y == value2.Y
-                && value1.Z == value2.Z;
+            return Math.Abs (value1.X - value2.X) < EPSILON &&
+                       Math.Abs (value1.Y - value2.Y) < EPSILON &&
+                       Math.Abs (value1.Z - value2.Z) < EPSILON;
         }
 
         public static bool operator !=(Vector3 value1, Vector3 value2)

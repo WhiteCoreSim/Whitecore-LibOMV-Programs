@@ -232,10 +232,10 @@ namespace OpenMetaverse
         /// <returns>A quaternion representation of this rotation matrix</returns>
         public Quaternion GetQuaternion()
         {
-            Quaternion quat = new Quaternion();
+            var quat = new Quaternion();
             float trace = Trace() + 1f;
 
-            if (trace > Single.Epsilon)
+            if (trace > float.Epsilon)
             {
                 float s = 0.5f / (float)Math.Sqrt(trace);
 
@@ -278,30 +278,32 @@ namespace OpenMetaverse
             return quat;
         }
 
+        const float EPSILON = 0.0000001f;   // floating point comparison equality
+
         public bool Decompose(out Vector3 scale, out Quaternion rotation, out Vector3 translation)
         {
-            translation.X = this.M41;
-            translation.Y = this.M42;
-            translation.Z = this.M43;
+            translation.X = M41;
+            translation.Y = M42;
+            translation.Z = M43;
 
             float xs = (Math.Sign(M11 * M12 * M13 * M14) < 0) ? -1 : 1;
             float ys = (Math.Sign(M21 * M22 * M23 * M24) < 0) ? -1 : 1;
             float zs = (Math.Sign(M31 * M32 * M33 * M34) < 0) ? -1 : 1;
 
-            scale.X = xs * (float)Math.Sqrt(this.M11 * this.M11 + this.M12 * this.M12 + this.M13 * this.M13);
-            scale.Y = ys * (float)Math.Sqrt(this.M21 * this.M21 + this.M22 * this.M22 + this.M23 * this.M23);
-            scale.Z = zs * (float)Math.Sqrt(this.M31 * this.M31 + this.M32 * this.M32 + this.M33 * this.M33);
+            scale.X = xs * (float)Math.Sqrt(M11 * M11 + M12 * M12 + M13 * M13);
+            scale.Y = ys * (float)Math.Sqrt(M21 * M21 + M22 * M22 + M23 * M23);
+            scale.Z = zs * (float)Math.Sqrt(M31 * M31 + M32 * M32 + M33 * M33);
 
-            if (scale.X == 0.0 || scale.Y == 0.0 || scale.Z == 0.0)
+            if (Math.Abs (scale.X) < EPSILON || Math.Abs (scale.Y) < EPSILON || Math.Abs (scale.Z) < EPSILON)
             {
                 rotation = Quaternion.Identity;
                 return false;
             }
 
-            Matrix4 m1 = new Matrix4(this.M11 / scale.X, M12 / scale.X, M13 / scale.X, 0,
-                                     this.M21 / scale.Y, M22 / scale.Y, M23 / scale.Y, 0,
-                                     this.M31 / scale.Z, M32 / scale.Z, M33 / scale.Z, 0,
-                                     0, 0, 0, 1);
+            var m1 = new Matrix4(M11 / scale.X, M12 / scale.X, M13 / scale.X, 0,
+                                 M21 / scale.Y, M22 / scale.Y, M23 / scale.Y, 0,
+                                 M31 / scale.Z, M32 / scale.Z, M33 / scale.Z, 0,
+                                 0, 0, 0, 1);
 
             rotation = Quaternion.CreateFromRotationMatrix(m1);
             return true;
@@ -338,7 +340,7 @@ namespace OpenMetaverse
 
         public static Matrix4 CreateFromAxisAngle(Vector3 axis, float angle)
         {
-            Matrix4 matrix = new Matrix4();
+            var matrix = new Matrix4();
 
             float x = axis.X;
             float y = axis.Y;
@@ -917,7 +919,7 @@ namespace OpenMetaverse
 
         public static Matrix4 Inverse3x3(Matrix4 matrix)
         {
-            if (matrix.Determinant3x3() == 0f)
+            if (Math.Abs (matrix.Determinant3x3 ()) < EPSILON)
                 throw new ArgumentException("Singular matrix inverse not possible");
 
             return (Adjoint3x3(matrix) / matrix.Determinant3x3());
@@ -925,7 +927,7 @@ namespace OpenMetaverse
 
         public static Matrix4 Adjoint3x3(Matrix4 matrix)
         {
-            Matrix4 adjointMatrix = new Matrix4();
+            var adjointMatrix = new Matrix4();
             for (int i = 0; i < 4; i++)
             {
                 for (int j = 0; j < 4; j++)
@@ -938,7 +940,7 @@ namespace OpenMetaverse
 
         public static Matrix4 Inverse(Matrix4 matrix)
         {
-            if (matrix.Determinant() == 0f)
+            if (Math.Abs (matrix.Determinant ()) < EPSILON)
                 throw new ArgumentException("Singular matrix inverse not possible");
 
             return (Adjoint(matrix) / matrix.Determinant());
@@ -946,7 +948,7 @@ namespace OpenMetaverse
 
         public static Matrix4 Adjoint(Matrix4 matrix)
         {
-            Matrix4 adjointMatrix = new Matrix4();
+            var adjointMatrix = new Matrix4();
             for (int i = 0; i < 4; i++)
             {
                 for (int j = 0; j < 4; j++)
@@ -959,7 +961,7 @@ namespace OpenMetaverse
 
         public static Matrix4 Minor(Matrix4 matrix, int row, int col)
         {
-            Matrix4 minor = new Matrix4();
+            var minor = new Matrix4();
             int m = 0, n = 0;
 
             for (int i = 0; i < 4; i++)
@@ -986,15 +988,30 @@ namespace OpenMetaverse
 
         public override bool Equals(object obj)
         {
-            return (obj is Matrix4) ? this.Equals((Matrix4)obj) : false;
+            return (obj is Matrix4) ? Equals((Matrix4)obj) : false;
         }
 
         public bool Equals(Matrix4 other)
         {
-            return M11 == other.M11 && M12 == other.M12 && M13 == other.M13 && M14 == other.M14 &&
-                   M21 == other.M21 && M22 == other.M22 && M23 == other.M23 && M24 == other.M24 &&
-                   M31 == other.M31 && M32 == other.M32 && M33 == other.M33 && M14 == other.M34 &&
-                   M41 == other.M41 && M42 == other.M42 && M43 == other.M43 && M44 == other.M44;
+            var eq1 = Math.Abs (M11 - other.M11) < EPSILON &&
+                          Math.Abs (M12 - other.M12) < EPSILON &&
+                          Math.Abs (M13 - other.M13) < EPSILON &&
+                          Math.Abs (M14 - other.M14) < EPSILON;
+            var eq2 = Math.Abs (M21 - other.M21) < EPSILON &&
+                          Math.Abs (M22 - other.M22) < EPSILON &&
+                          Math.Abs (M23 - other.M23) < EPSILON &&
+                          Math.Abs (M24 - other.M24) < EPSILON;
+            var eq3 = Math.Abs (M31 - other.M31) < EPSILON &&
+                          Math.Abs (M32 - other.M32) < EPSILON &&
+                          Math.Abs (M33 - other.M33) < EPSILON &&
+                          Math.Abs (M14 - other.M34) < EPSILON;
+            var eq4 = Math.Abs (M41 - other.M41) < EPSILON &&
+                          Math.Abs (M42 - other.M42) < EPSILON &&
+                          Math.Abs (M43 - other.M43) < EPSILON &&
+                          Math.Abs (M44 - other.M44) < EPSILON;
+
+            return eq1 && eq2 && eq3 && eq4;
+            
         }
 
         public override int GetHashCode()

@@ -24,7 +24,6 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-using System;
 using System.Threading;
 
 namespace OpenMetaverse
@@ -38,7 +37,7 @@ namespace OpenMetaverse
         /// <summary>
         /// Provides a node container for data in a singly linked list
         /// </summary>
-        private sealed class SingleLinkNode
+        sealed class SingleLinkNode
         {
             /// <summary>Pointer to the next node in list</summary>
             public SingleLinkNode Next;
@@ -55,7 +54,7 @@ namespace OpenMetaverse
             /// </summary>
             public SingleLinkNode(T item)
             {
-                this.Item = item;
+                Item = item;
             }
         }
 
@@ -86,7 +85,7 @@ namespace OpenMetaverse
         /// <param name="item">Item to enqeue</param>
         public void Enqueue(T item)
         {
-            SingleLinkNode newNode = new SingleLinkNode { Item = item };
+            var newNode = new SingleLinkNode { Item = item };
 
             while (true)
             {
@@ -139,11 +138,9 @@ namespace OpenMetaverse
             }
         }
 
-        private static bool CAS(ref SingleLinkNode location, SingleLinkNode comparand, SingleLinkNode newValue)
+         static bool CAS(ref SingleLinkNode location, SingleLinkNode comparand, SingleLinkNode newValue)
         {
-            return
-                (object)comparand ==
-                (object)Interlocked.CompareExchange<SingleLinkNode>(ref location, newValue, comparand);
+            return comparand == (object)Interlocked.CompareExchange (ref location, newValue, comparand);
         }
     }
 }

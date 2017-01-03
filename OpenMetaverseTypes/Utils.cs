@@ -31,6 +31,8 @@ namespace OpenMetaverse
 {
     public static partial class Utils
     {
+        const float EPSILON = 0.0000001f;   // floating point comparison equivelency
+
         /// <summary>
         /// Operating system
         /// </summary>
@@ -84,20 +86,20 @@ namespace OpenMetaverse
 
         /// <summary>Provide a single instance of the MD5 class to avoid making
         /// duplicate copies and handle thread safety</summary>
-        private static readonly System.Security.Cryptography.MD5 MD5Builder =
+        static readonly System.Security.Cryptography.MD5 MD5Builder =
             new System.Security.Cryptography.MD5CryptoServiceProvider();
 
         /// <summary>Provide a single instance of the SHA-1 class to avoid
         /// making duplicate copies and handle thread safety</summary>
-        private static readonly System.Security.Cryptography.SHA1 SHA1Builder =
+        static readonly System.Security.Cryptography.SHA1 SHA1Builder =
             new System.Security.Cryptography.SHA1CryptoServiceProvider();
 
-        private static readonly System.Security.Cryptography.SHA256 SHA256Builder =
+        static readonly System.Security.Cryptography.SHA256 SHA256Builder =
             new System.Security.Cryptography.SHA256Managed();
 
         /// <summary>Provide a single instance of a random number generator
         /// to avoid making duplicate copies and handle thread safety</summary>
-        private static readonly Random RNG = new Random();
+        static readonly Random RNG = new Random();
 
         #region Math
 
@@ -173,7 +175,7 @@ namespace OpenMetaverse
         /// </summary>
         public static bool IsFinite(float value)
         {
-            return !(Single.IsNaN(value) || Single.IsInfinity(value));
+            return !(float.IsNaN(value) || float.IsInfinity(value));
         }
 
         /// <summary>
@@ -181,7 +183,7 @@ namespace OpenMetaverse
         /// </summary>
         public static bool IsFinite(double value)
         {
-            return !(Double.IsNaN(value) || Double.IsInfinity(value));
+            return !(double.IsNaN(value) || double.IsInfinity(value));
         }
 
         /// <summary>
@@ -203,9 +205,9 @@ namespace OpenMetaverse
             double sCubed = s * s * s;
             double sSquared = s * s;
 
-            if (amount == 0f)
+            if (Math.Abs (amount) < EPSILON)
                 result = value1;
-            else if (amount == 1f)
+            else if (Math.Abs (amount - 1f) < EPSILON)
                 result = value2;
             else
                 result = (2d * v1 - 2d * v2 + t2 + t1) * sCubed +
@@ -222,9 +224,9 @@ namespace OpenMetaverse
             double sCubed = s * s * s;
             double sSquared = s * s;
 
-            if (amount == 0d)
+            if (Math.Abs (amount) < EPSILON)
                 result = value1;
-            else if (amount == 1f)
+            else if (Math.Abs (amount - 1f) < EPSILON)
                 result = value2;
             else
                 result = (2d * v1 - 2d * v2 + t2 + t1) * sCubed +
@@ -248,8 +250,8 @@ namespace OpenMetaverse
             // It is expected that 0 < amount < 1
             // If amount < 0, return value1
             // If amount > 1, return value2
-            float result = Utils.Clamp(amount, 0f, 1f);
-            return Utils.Hermite(value1, 0f, value2, 0f, result);
+            float result = Clamp (amount, 0f, 1f);
+            return Hermite (value1, 0f, value2, 0f, result);
         }
 
         public static double SmoothStep(double value1, double value2, double amount)
@@ -257,8 +259,8 @@ namespace OpenMetaverse
             // It is expected that 0 < amount < 1
             // If amount < 0, return value1
             // If amount > 1, return value2
-            double result = Utils.Clamp(amount, 0f, 1f);
-            return Utils.Hermite(value1, 0f, value2, 0f, result);
+            double result = Clamp(amount, 0f, 1f);
+            return Hermite(value1, 0f, value2, 0f, result);
         }
 
         public static float ToDegrees(float radians)
@@ -306,12 +308,12 @@ namespace OpenMetaverse
         /// <returns>The SHA1 hash as a string</returns>
         public static string SHA1String(string value)
         {
-            StringBuilder digest = new StringBuilder(40);
+            var digest = new StringBuilder(40);
             byte[] hash = SHA1(Encoding.UTF8.GetBytes(value));
 
             // Convert the hash to a hex string
             foreach (byte b in hash)
-                digest.AppendFormat(Utils.EnUsCulture, "{0:x2}", b);
+                digest.AppendFormat(EnUsCulture, "{0:x2}", b);
 
             return digest.ToString();
         }
@@ -339,7 +341,7 @@ namespace OpenMetaverse
 
             // Convert the hash to a hex string
             foreach (byte b in hash)
-                digest.AppendFormat(Utils.EnUsCulture, "{0:x2}", b);
+                digest.AppendFormat(EnUsCulture, "{0:x2}", b);
 
             return digest.ToString();
         }
@@ -351,14 +353,14 @@ namespace OpenMetaverse
         /// <returns>An MD5 hash in string format, with $1$ prepended</returns>
         public static string MD5(string password)
         {
-            StringBuilder digest = new StringBuilder(32);
-            byte[] hash = MD5(ASCIIEncoding.Default.GetBytes(password));
+            var digest = new StringBuilder(32);
+            byte[] hash = MD5(Encoding.Default.GetBytes(password));
 
             // Convert the hash to a hex string
             foreach (byte b in hash)
-                digest.AppendFormat(Utils.EnUsCulture, "{0:x2}", b);
+                digest.AppendFormat(EnUsCulture, "{0:x2}", b);
 
-            return "$1$" + digest.ToString();
+            return "$1$" + digest;
         }
 
         /// <summary>
@@ -368,12 +370,12 @@ namespace OpenMetaverse
         /// <returns>The MD5 hash as a string</returns>
         public static string MD5String(string value)
         {
-            StringBuilder digest = new StringBuilder(32);
+            var digest = new StringBuilder(32);
             byte[] hash = MD5(Encoding.UTF8.GetBytes(value));
 
             // Convert the hash to a hex string
             foreach (byte b in hash)
-                digest.AppendFormat(Utils.EnUsCulture, "{0:x2}", b);
+                digest.AppendFormat(EnUsCulture, "{0:x2}", b);
 
             return digest.ToString();
         }
@@ -400,26 +402,18 @@ namespace OpenMetaverse
         {
             const string OSX_CHECK_FILE = "/Library/Extensions.kextcache";
 
-            if (Environment.OSVersion.Platform == PlatformID.WinCE)
-            {
+            if (Environment.OSVersion.Platform == PlatformID.WinCE) {
                 return Platform.WindowsCE;
             }
-            else
-            {
-                int plat = (int)Environment.OSVersion.Platform;
+            var plat = (int)Environment.OSVersion.Platform;
 
-                if ((plat != 4) && (plat != 128))
-                {
-                    return Platform.Windows;
-                }
-                else
-                {
-                    if (System.IO.File.Exists(OSX_CHECK_FILE))
-                        return Platform.OSX;
-                    else
-                        return Platform.Linux;
-                }
+            if ((plat != 4) && (plat != 128)) {
+                return Platform.Windows;
             }
+            if (System.IO.File.Exists (OSX_CHECK_FILE))
+                return Platform.OSX;
+            else
+                return Platform.Linux;
         }
 
         /// <summary>
@@ -431,8 +425,7 @@ namespace OpenMetaverse
             Type t = Type.GetType("Mono.Runtime");
             if (t != null)
                 return Runtime.Mono;
-            else
-                return Runtime.Windows;
+            return Runtime.Windows;
         }
 
         #endregion Platform

@@ -34,6 +34,8 @@ namespace OpenMetaverse
     [StructLayout(LayoutKind.Sequential)]
     public struct Vector4 : IComparable<Vector4>, IEquatable<Vector4>
     {
+        const float EPSILON = 0.0000001f;   // foalting point comparision equality
+
         /// <summary>X value</summary>
         public float X;
         /// <summary>Y value</summary>
@@ -397,7 +399,7 @@ namespace OpenMetaverse
         public static Vector4 Parse(string val)
         {
             char[] splitChar = { ',' };
-            string[] split = val.Replace("<", String.Empty).Replace(">", String.Empty).Split(splitChar);
+            string[] split = val.Replace("<", string.Empty).Replace(">", string.Empty).Split(splitChar);
             return new Vector4(
                 float.Parse(split[0].Trim(), Utils.EnUsCulture),
                 float.Parse(split[1].Trim(), Utils.EnUsCulture),
@@ -430,10 +432,10 @@ namespace OpenMetaverse
 
         public bool Equals(Vector4 other)
         {
-            return W == other.W
-                && X == other.X
-                && Y == other.Y
-                && Z == other.Z;
+            return Math.Abs (W - other.W) < EPSILON &&
+                       Math.Abs (X - other.X) < EPSILON &&
+                       Math.Abs (Y - other.Y) < EPSILON &&
+                       Math.Abs (Z - other.Z) < EPSILON;
         }
 
         public override int GetHashCode()
@@ -453,10 +455,10 @@ namespace OpenMetaverse
         /// <returns>Raw string representation of the vector</returns>
         public string ToRawString()
         {
-            CultureInfo enUs = new CultureInfo("en-us");
+            var enUs = new CultureInfo("en-us");
             enUs.NumberFormat.NumberDecimalDigits = 3;
 
-            return String.Format(enUs, "{0} {1} {2} {3}", X, Y, Z, W);
+            return string.Format(enUs, "{0} {1} {2} {3}", X, Y, Z, W);
         }
 
         #endregion Overrides
@@ -465,10 +467,10 @@ namespace OpenMetaverse
 
         public static bool operator ==(Vector4 value1, Vector4 value2)
         {
-            return value1.W == value2.W
-                && value1.X == value2.X
-                && value1.Y == value2.Y
-                && value1.Z == value2.Z;
+            return Math.Abs (value1.W - value2.W) < EPSILON &&
+                       Math.Abs (value1.X - value2.X) < EPSILON &&
+                       Math.Abs (value1.Y - value2.Y) < EPSILON &&
+                       Math.Abs (value1.Z - value2.Z) < EPSILON;
         }
 
         public static bool operator !=(Vector4 value1, Vector4 value2)
