@@ -275,9 +275,9 @@ namespace OpenMetaverse
 
             var max = Math.Max(Math.Max(R, G), B);
             var  min = Math.Min(Math.Min(R, B), B);
-            var rDelta;
-            var gDelta;
-            var bDelta;
+            float rDelta;
+            float gDelta;
+            float bDelta;
 
             if (Math.Abs (max - min) < EPSILON) {
                 // Achromatic, hue is undefined

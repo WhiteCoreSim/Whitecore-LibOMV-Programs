@@ -41,11 +41,11 @@ namespace OpenMetaverse
         /// </summary>
         /// <param name="message">Data being logged</param>
         /// <param name="level">The severity of the log entry from <seealso cref="Helpers.LogLevel"/></param>
-        //public delegate void LogCallback(object message, Helpers.LogLevel level);
+        public delegate void LogCallback(object message, Helpers.LogLevel level);
 
         /// <summary>Triggered whenever a message is logged. If this is left
         /// null, log messages will go to the console</summary>
-        //public event LogCallback OnLogMessage;
+        public static event LogCallback OnLogMessage;
 
         /// <summary>log4net logging engine</summary>
         //public ILog LogInstance;
