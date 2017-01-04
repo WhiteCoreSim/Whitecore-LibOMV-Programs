@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("OpenMetaverse")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("WhiteCore.OpenMeterverse.Library")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Open Metaverse Foundation")]
 [assembly: AssemblyProduct("OpenMetaverse")]
@@ -29,5 +29,5 @@ using System.Runtime.InteropServices;
 //      Build Number
 //      Revision
 //
-[assembly: AssemblyVersion("0.9.4.5")]
-[assembly: AssemblyFileVersion("0.9.4.5")]
+[assembly: AssemblyVersion("0.9.4.6")]
+[assembly: AssemblyFileVersion("0.9.4.6")]
