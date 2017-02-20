@@ -227,7 +227,8 @@ namespace OpenMetaverse.Assets
             obj.Phantom = (flags & PrimFlags.Phantom) != 0;
             obj.DieAtEdge = (flags & PrimFlags.DieAtEdge) != 0;
             obj.ReturnAtEdge = (flags & PrimFlags.ReturnAtEdge) != 0;
-            obj.Temporary = (flags & PrimFlags.Temporary) != 0;
+            obj.Temporary = (flags & PrimFlags.Temporary) != 0 ||
+                            (flags & PrimFlags.TemporaryOnRez) != 0;
             obj.Sandbox = (flags & PrimFlags.Sandbox) != 0;
 
             obj.ID = ReadUUID(reader, "UUID");
@@ -1133,7 +1134,8 @@ namespace OpenMetaverse.Assets
             prim.SoundID = obj.Sound;
             prim.SoundRadius = obj.SoundRadius;
             prim.State = obj.PrimData.State;
-            prim.Temporary = (obj.Flags & PrimFlags.Temporary) == PrimFlags.Temporary;
+            prim.Temporary = ((obj.Flags & PrimFlags.Temporary) == PrimFlags.Temporary ||
+                              (obj.Flags & PrimFlags.TemporaryOnRez) == PrimFlags.TemporaryOnRez);
             prim.Text = obj.Text;
             prim.TextColor = obj.TextColor;
             prim.Textures = obj.Textures;
