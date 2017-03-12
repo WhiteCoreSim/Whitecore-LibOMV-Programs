@@ -134,6 +134,7 @@ namespace OpenMetaverse
             req.Add ("ChatSessionRequest");
             req.Add ("CopyInventoryFromNotecard");
             req.Add ("CreateInventoryCategory");
+            req.Add ("DirectDelivery");
             req.Add ("DispatchRegionInfo");
             req.Add ("EnvironmentSettings");
             req.Add ("EstateChangeInfo");
@@ -147,6 +148,7 @@ namespace OpenMetaverse
             req.Add ("GetDisplayNames");
             req.Add ("GetMesh");
             req.Add ("GetMesh2");
+            req.Add ("GetMetadata");
             req.Add ("GetObjectCost");
             req.Add ("GetObjectPhysicsData");
             req.Add ("GetTexture");
@@ -201,6 +203,19 @@ namespace OpenMetaverse
             req.Add ("ViewerMetrics");
             req.Add ("ViewerStartAuction");
             req.Add ("ViewerStats");
+            // Experiences
+            req.Add ("AgentExperiences");
+            req.Add ("ExperiencePreferences");
+            req.Add ("FindExperienceByName");
+            req.Add ("GetExperiences");            
+            req.Add ("GetExperienceInfo");
+            req.Add ("GetAdminExperiences");
+            req.Add ("GetCreatorExperiences");            
+            req.Add ("GroupExperiences");            
+            req.Add ("IsExperienceAdmin");
+            req.Add ("IsExperienceContributor");
+            req.Add ("RegionExperiences");
+            req.Add ("UpdateExperience");
 
             _SeedRequest = new CapsClient (new Uri (_SeedCapsURI));
             _SeedRequest.OnComplete += SeedRequestCompleteHandler;
