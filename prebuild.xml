@@ -209,6 +209,7 @@
       <Reference name="OpenMetaverseTypes"/>
       <Reference name="OpenMetaverse.StructuredData"/>
       <Reference name="XMLRPC"/>
+      <Reference name="log4net"/>	  
 
       <Files>
         <Match pattern="*.cs" recurse="true">
