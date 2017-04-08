@@ -163,7 +163,8 @@
      </Files>
     </Project>
 
-    <Project name="OpenMetaverse.Tests" path="OpenMetaverse.Tests" type="Library" frameworkVersion="v4_5">
+    <!-- // Tests need to be rewritten for .Net 4.0
+	<Project name="OpenMetaverse.Tests" path="OpenMetaverse.Tests" type="Library" frameworkVersion="v4_5">
       <Configuration name="Debug">
         <Options>
           <OutputPath>../bin/</OutputPath>
@@ -189,7 +190,7 @@
         </Match>
       </Files>
     </Project>
-
+	-->
     <Project name="GridProxy" path="Programs/GridProxy" type="Library" frameworkVersion="v4_5">
       <Configuration name="Debug">
         <Options>
