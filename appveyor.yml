@@ -14,5 +14,5 @@ build_script:
 - msbuild OpenMetaverse.sln /p:Configuration=Debug  /p:DefineConstants="ISWIN;NET_4_5"
 
 artifacts:
-- path: OpenMetaverse\bin
+- path: bin
   name: WhiteCoreLibOMV
