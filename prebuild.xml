@@ -491,7 +491,9 @@
       </Files>
     </Project>
     -->
-    <Project name="PrimWorkshop" path="Programs/PrimWorkshop" type="WinExe" frameworkVersion="v4_5" icon="..\..\docs\Libomv.ico">
+    <!-- // Disabling this for the moment, it's breaking compilation - Fly-Man- 8th of April 2017
+	
+	<Project name="PrimWorkshop" path="Programs/PrimWorkshop" type="WinExe" frameworkVersion="v4_5" icon="..\..\docs\Libomv.ico">
       <Configuration name="Debug">
         <Options>
           <OutputPath>../../bin/</OutputPath>
@@ -526,6 +528,7 @@
         <Match pattern="*.ico" recurse="true"/>
       </Files>
     </Project>
+	-->
 
     <Project name="GridImageUpload" path="Programs/GridImageUpload" type="WinExe" frameworkVersion="v4_5" icon="..\..\docs\Libomv.ico">
       <Configuration name="Debug">
