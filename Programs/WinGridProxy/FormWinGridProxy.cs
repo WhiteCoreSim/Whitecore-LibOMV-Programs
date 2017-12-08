@@ -1342,6 +1342,13 @@ namespace WinGridProxy
                     m_rtb.SelectionColor = Color.Green;
 
             }
+            // Trigger Save
+
+            if (richTextBoxDecodedResponse.SelectionLength > 0)
+            {
+                var myUniqueFileName = string.Format(@"{0}.txt", Guid.NewGuid());
+                richTextBoxDecodedResponse.SaveFile(AppDomain.CurrentDomain.BaseDirectory + "\\exports\\" + myUniqueFileName, RichTextBoxStreamType.PlainText);
+            }
         }
 
         private void AddSession(ListViewItem item)
