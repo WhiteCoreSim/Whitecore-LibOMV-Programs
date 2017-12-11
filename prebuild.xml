@@ -34,7 +34,7 @@
 
     <!-- External Libraries -->
 
-    <Project name="CSJ2K" path="CSJ2K" type="Library" frameworkVersion="v4_5">
+    <Project name="CSJ2K" path="Whitecore-LibOMV\CSJ2K" type="Library" frameworkVersion="v4_5">
       <Configuration name="Debug">
         <Options>
           <OutputPath>../bin/</OutputPath>
@@ -58,7 +58,7 @@
 
     <!-- Libraries -->
 
-    <Project name="OpenMetaverseTypes" path="OpenMetaverseTypes" type="Library" rootNamespace="OpenMetaverse" frameworkVersion="v4_5">
+    <Project name="OpenMetaverseTypes" path="Whitecore-LibOMV\OpenMetaverseTypes" type="Library" rootNamespace="OpenMetaverse" frameworkVersion="v4_5">
       <Configuration name="Debug">
         <Options>
           <OutputPath>../bin/</OutputPath>
@@ -81,7 +81,7 @@
       </Files>
     </Project>
 
-    <Project name="OpenMetaverse.StructuredData" path="OpenMetaverse.StructuredData" type="Library" rootNamespace="OpenMetaverse.StructuredData" frameworkVersion="v4_5">
+    <Project name="OpenMetaverse.StructuredData" path="Whitecore-LibOMV\OpenMetaverse.StructuredData" type="Library" rootNamespace="OpenMetaverse.StructuredData" frameworkVersion="v4_5">
       <Configuration name="Debug">
         <Options>
           <OutputPath>../bin/</OutputPath>
@@ -105,7 +105,7 @@
       </Files>
     </Project>
 
-    <Project name="OpenMetaverse" path="OpenMetaverse" type="Library" rootNamespace="OpenMetaverse" frameworkVersion="v4_5">
+    <Project name="OpenMetaverse" path="Whitecore-LibOMV\OpenMetaverse" type="Library" rootNamespace="OpenMetaverse" frameworkVersion="v4_5">
       <Configuration name="Debug">
         <Options>
           <OutputPath>../bin/</OutputPath>
@@ -136,7 +136,7 @@
       </Files>
     </Project>
 
-    <Project name="OpenMetaverse.Utilities" path="OpenMetaverse.Utilities" type="Library" frameworkVersion="v4_5">
+    <Project name="OpenMetaverse.Utilities" path="Whitecore-LibOMV\OpenMetaverse.Utilities" type="Library" frameworkVersion="v4_5">
       <Configuration name="Debug">
         <Options>
           <OutputPath>../bin/</OutputPath>
@@ -162,8 +162,37 @@
        </Match>
      </Files>
     </Project>
+	
+    <Project name="GridProxy" path="GridProxy" type="Library" frameworkVersion="v4_5">
+      <Configuration name="Debug">
+        <Options>
+          <OutputPath>../bin/</OutputPath>
+        </Options>
+      </Configuration>
+      <Configuration name="Release">
+        <Options>
+          <OutputPath>../bin/</OutputPath>
+        </Options>
+      </Configuration>
 
-    <Project name="OpenMetaverse.Rendering.Simple" path="OpenMetaverse.Rendering.Simple" type="Library" frameworkVersion="v4_5">
+      <ReferencePath>../bin/</ReferencePath>
+      <Reference name="System"/>
+      <Reference name="System.Xml"/>
+      <Reference name="OpenMetaverse"/>
+      <Reference name="OpenMetaverseTypes"/>
+      <Reference name="OpenMetaverse.StructuredData"/>
+      <Reference name="XMLRPC"/>
+      <Reference name="log4net"/>	  
+
+      <Files>
+        <Match pattern="*.cs" recurse="true">
+          <Exclude name="GridProxyMain.cs"/>
+          <Exclude name="obj" pattern="obj"/>
+        </Match>
+      </Files>
+    </Project>	
+
+    <Project name="OpenMetaverse.Rendering.Simple" path="Whitecore-LibOMV\OpenMetaverse.Rendering.Simple" type="Library" frameworkVersion="v4_5">
       <Configuration name="Debug">
         <Options>
           <OutputPath>../bin/</OutputPath>
@@ -187,7 +216,7 @@
       </Files>
     </Project>
 
-    <Project name="OpenMetaverse.Rendering.Meshmerizer" path="OpenMetaverse.Rendering.Meshmerizer" type="Library" frameworkVersion="v4_5">
+    <Project name="OpenMetaverse.Rendering.Meshmerizer" path="Whitecore-LibOMV\OpenMetaverse.Rendering.Meshmerizer" type="Library" frameworkVersion="v4_5">
       <Configuration name="Debug">
         <Options>
           <OutputPath>../bin/</OutputPath>
@@ -212,7 +241,7 @@
       </Files>
     </Project>
 
-    <Project name="OpenMetaverse.GUI" path="OpenMetaverse.GUI" type="Library" frameworkVersion="v4_5">
+    <Project name="OpenMetaverse.GUI" path="Whitecore-LibOMV\OpenMetaverse.GUI" type="Library" frameworkVersion="v4_5">
       <Configuration name="Debug">
         <Options>
           <OutputPath>../bin/</OutputPath>
@@ -241,19 +270,19 @@
 
     <!-- Programs -->
 
-    <Project name="AvatarPreview" path="AvatarPreview" type="WinExe" frameworkVersion="v4_5" icon="..\..\docs\Libomv.ico">
+    <Project name="AvatarPreview" path="AvatarPreview" type="WinExe" frameworkVersion="v4_5" icon="..\data\Libomv.ico">
       <Configuration name="Debug">
         <Options>
-          <OutputPath>../../bin/</OutputPath>
+          <OutputPath>../bin/</OutputPath>
         </Options>
       </Configuration>
       <Configuration name="Release">
         <Options>
-          <OutputPath>../../bin/</OutputPath>
+          <OutputPath>../bin/</OutputPath>
         </Options>
       </Configuration>
 
-      <ReferencePath>../../bin/</ReferencePath>
+      <ReferencePath>../bin/</ReferencePath>
       <Reference name="System"/>
       <Reference name="System.Xml"/>
       <Reference name="System.Data"/>
@@ -274,19 +303,19 @@
       </Files>
     </Project>
 
-    <Project name="Baker" path="Baker" type="WinExe" frameworkVersion="v4_5" icon="..\..\docs\Libomv.ico">
+    <Project name="Baker" path="Baker" type="WinExe" frameworkVersion="v4_5" icon="..\data\Libomv.ico">
       <Configuration name="Debug">
         <Options>
-          <OutputPath>../../bin/</OutputPath>
+          <OutputPath>../bin/</OutputPath>
         </Options>
       </Configuration>
       <Configuration name="Release">
         <Options>
-          <OutputPath>../../bin/</OutputPath>
+          <OutputPath>../bin/</OutputPath>
         </Options>
       </Configuration>
 
-      <ReferencePath>../../bin/</ReferencePath>
+      <ReferencePath>../bin/</ReferencePath>
       <Reference name="System"/>
       <Reference name="System.Data"/>
       <Reference name="System.Drawing"/>
@@ -305,19 +334,19 @@
       </Files>
     </Project>
 
-    <Project name="Importprimscript" path="importprimscript" type="Exe" frameworkVersion="v4_5" icon="..\..\docs\Libomv.ico">
+    <Project name="Importprimscript" path="importprimscript" type="Exe" frameworkVersion="v4_5" icon="..\data\Libomv.ico">
       <Configuration name="Debug">
         <Options>
-          <OutputPath>../../bin/</OutputPath>
+          <OutputPath>../bin/</OutputPath>
         </Options>
       </Configuration>
       <Configuration name="Release">
         <Options>
-          <OutputPath>../../bin/</OutputPath>
+          <OutputPath>../bin/</OutputPath>
         </Options>
       </Configuration>
 
-      <ReferencePath>../../bin/</ReferencePath>
+      <ReferencePath>../bin/</ReferencePath>
       <Reference name="System"/>
       <Reference name="System.Drawing"/>
       <Reference name="OpenMetaverse"/>
@@ -330,19 +359,19 @@
       </Files>
     </Project>
 
-    <Project name="Mapgenerator" path="mapgenerator" type="Exe" frameworkVersion="v4_5" icon="..\..\docs\Libomv.ico">
+    <Project name="Mapgenerator" path="Mapgenerator" type="Exe" frameworkVersion="v4_5" icon="..\data\Libomv.ico">
       <Configuration name="Debug">
         <Options>
-          <OutputPath>../../bin/</OutputPath>
+          <OutputPath>../bin/</OutputPath>
         </Options>
       </Configuration>
       <Configuration name="Release">
         <Options>
-          <OutputPath>../../bin/</OutputPath>
+          <OutputPath>../bin/</OutputPath>
         </Options>
       </Configuration>
 
-      <ReferencePath>../../bin/</ReferencePath>
+      <ReferencePath>../bin/</ReferencePath>
       <Reference name="System"/>
 
       <Files>
@@ -351,15 +380,15 @@
       </Files>
     </Project>
 
-    <Project name="IRCGateway" path="examples/IRCGateway" type="Exe" frameworkVersion="v4_5" icon="..\..\..\docs\Libomv.ico">
+    <Project name="IRCGateway" path="IRCGateway" type="Exe" frameworkVersion="v4_5" icon="..\data\Libomv.ico">
       <Configuration name="Debug">
         <Options>
-          <OutputPath>../../../bin/</OutputPath>
+          <OutputPath>../bin/</OutputPath>
         </Options>
       </Configuration>
       <Configuration name="Release">
         <Options>
-          <OutputPath>../../../bin/</OutputPath>
+          <OutputPath>../bin/</OutputPath>
         </Options>
       </Configuration>
 
@@ -374,15 +403,15 @@
       </Files>
     </Project>
 
-    <Project name="Dashboard" path="examples/Dashboard" type="WinExe" frameworkVersion="v4_5" icon="..\..\..\docs\Libomv.ico">
+    <Project name="Dashboard" path="Dashboard" type="WinExe" frameworkVersion="v4_5" icon="..\data\Libomv.ico">
       <Configuration name="Debug">
         <Options>
-          <OutputPath>../../../bin/</OutputPath>
+          <OutputPath>../bin/</OutputPath>
         </Options>
       </Configuration>
       <Configuration name="Release">
         <Options>
-          <OutputPath>../../../bin/</OutputPath>
+          <OutputPath>../bin/</OutputPath>
         </Options>
       </Configuration>
 
@@ -404,19 +433,19 @@
       </Files>
     </Project>
 
-    <Project name="GridImageUpload" path="GridImageUpload" type="WinExe" frameworkVersion="v4_5" icon="..\..\docs\Libomv.ico">
+    <Project name="GridImageUpload" path="GridImageUpload" type="WinExe" frameworkVersion="v4_5" icon="..\data\Libomv.ico">
       <Configuration name="Debug">
         <Options>
-          <OutputPath>../../bin/</OutputPath>
+          <OutputPath>../bin/</OutputPath>
         </Options>
       </Configuration>
       <Configuration name="Release">
         <Options>
-          <OutputPath>../../bin/</OutputPath>
+          <OutputPath>../bin/</OutputPath>
         </Options>
       </Configuration>
 
-      <ReferencePath>../../bin/</ReferencePath>
+      <ReferencePath>../bin/</ReferencePath>
       <Reference name="System"/>
       <Reference name="System.Data"/>
       <Reference name="System.Drawing"/>
@@ -434,19 +463,19 @@
       </Files>
     </Project>
 
-    <Project name="GridProxyApp" path="GridProxy" type="Exe" frameworkVersion="v4_5" icon="..\..\docs\Libomv.ico">
+    <Project name="GridProxyApp" path="GridProxy" type="Exe" frameworkVersion="v4_5" icon="..\data\Libomv.ico">
       <Configuration name="Debug">
         <Options>
-          <OutputPath>../../bin/</OutputPath>
+          <OutputPath>../bin/</OutputPath>
         </Options>
       </Configuration>
       <Configuration name="Release">
         <Options>
-          <OutputPath>../../bin/</OutputPath>
+          <OutputPath>../bin/</OutputPath>
         </Options>
       </Configuration>
 
-      <ReferencePath>../../bin/</ReferencePath>
+      <ReferencePath>../bin/</ReferencePath>
       <Reference name="System"/>
       <Reference name="System.Xml"/>
       <Reference name="GridProxy"/>
@@ -458,19 +487,19 @@
     </Project>
 
 
-    <Project name="WinGridProxy" path="WinGridProxy" type="WinExe" frameworkVersion="v4_5" icon="..\..\docs\Libomv-WG.ico">
+    <Project name="WinGridProxy" path="WinGridProxy" type="WinExe" frameworkVersion="v4_5" icon="..\data\Libomv-WG.ico">
       <Configuration name="Debug">
         <Options>
-          <OutputPath>../../bin/</OutputPath>
+          <OutputPath>../bin/</OutputPath>
         </Options>
       </Configuration>
       <Configuration name="Release">
         <Options>
-          <OutputPath>../../bin/</OutputPath>
+          <OutputPath>../bin/</OutputPath>
         </Options>
       </Configuration>
 
-      <ReferencePath>../../bin/</ReferencePath>
+      <ReferencePath>../bin/</ReferencePath>
       <Reference name="System"/>
       <Reference name="System.Core"/>
       <Reference name="System.Xml"/>
@@ -494,19 +523,19 @@
       </Files>
     </Project>
 
-    <Project name="VisualParamGenerator" path="VisualParamGenerator" type="Exe" frameworkVersion="v4_5" icon="..\..\docs\Libomv.ico">
+    <Project name="VisualParamGenerator" path="VisualParamGenerator" type="Exe" frameworkVersion="v4_5" icon="..\data\Libomv.ico">
       <Configuration name="Debug">
         <Options>
-          <OutputPath>../../bin/</OutputPath>
+          <OutputPath>../bin/</OutputPath>
         </Options>
       </Configuration>
       <Configuration name="Release">
         <Options>
-          <OutputPath>../../bin/</OutputPath>
+          <OutputPath>../bin/</OutputPath>
         </Options>
       </Configuration>
 
-      <ReferencePath>../../bin/</ReferencePath>
+      <ReferencePath>../bin/</ReferencePath>
       <Reference name="System"/>
       <Reference name="System.Xml"/>
       <Reference name="OpenMetaverse"/>
@@ -517,19 +546,19 @@
       </Files>
     </Project>
 
-    <Project name="VoiceTest" path="VoiceTest" type="Exe" frameworkVersion="v4_5" icon="..\..\docs\Libomv.ico">
+    <Project name="VoiceTest" path="VoiceTest" type="Exe" frameworkVersion="v4_5" icon="..\data\Libomv.ico">
       <Configuration name="Debug">
         <Options>
-          <OutputPath>../../bin/</OutputPath>
+          <OutputPath>../bin/</OutputPath>
         </Options>
       </Configuration>
       <Configuration name="Release">
         <Options>
-          <OutputPath>../../bin/</OutputPath>
+          <OutputPath>../bin/</OutputPath>
         </Options>
       </Configuration>
 
-      <ReferencePath>../../bin/</ReferencePath>
+      <ReferencePath>../bin/</ReferencePath>
       <Reference name="System"/>
       <Reference name="OpenMetaverse"/>
       <Reference name="OpenMetaverseTypes"/>
@@ -544,15 +573,15 @@
 
     <!-- Examples -->
 
-    <Project name="Groupmanager" path="Groupmanager" type="WinExe" frameworkVersion="v4_5" icon="..\..\..\docs\Libomv.ico">
+    <Project name="Groupmanager" path="Groupmanager" type="WinExe" frameworkVersion="v4_5" icon="..\data\Libomv.ico">
       <Configuration name="Debug">
         <Options>
-          <OutputPath>../../../bin/</OutputPath>
+          <OutputPath>../bin/</OutputPath>
         </Options>
       </Configuration>
       <Configuration name="Release">
         <Options>
-          <OutputPath>../../../bin/</OutputPath>
+          <OutputPath>../bin/</OutputPath>
         </Options>
       </Configuration>
 
@@ -574,15 +603,15 @@
       </Files>
     </Project>
 
-    <Project name="Heightmap" path="Heightmap" type="WinExe" frameworkVersion="v4_5" icon="..\..\..\docs\Libomv.ico">
+    <Project name="Heightmap" path="Heightmap" type="WinExe" frameworkVersion="v4_5" icon="..\data\Libomv.ico">
       <Configuration name="Debug">
         <Options>
-          <OutputPath>../../../bin/</OutputPath>
+          <OutputPath>../bin/</OutputPath>
         </Options>
       </Configuration>
       <Configuration name="Release">
         <Options>
-          <OutputPath>../../../bin/</OutputPath>
+          <OutputPath>../bin/</OutputPath>
         </Options>
       </Configuration>
 
@@ -604,15 +633,15 @@
       </Files>
     </Project>
 
-    <Project name="GridAccountant" path="GridAccountant" type="WinExe" frameworkVersion="v4_5" icon="..\..\..\docs\Libomv.ico">
+    <Project name="GridAccountant" path="GridAccountant" type="WinExe" frameworkVersion="v4_5" icon="..\data\Libomv.ico">
       <Configuration name="Debug">
         <Options>
-          <OutputPath>../../../bin/</OutputPath>
+          <OutputPath>../bin/</OutputPath>
         </Options>
       </Configuration>
       <Configuration name="Release">
         <Options>
-          <OutputPath>../../../bin/</OutputPath>
+          <OutputPath>../bin/</OutputPath>
         </Options>
       </Configuration>
 
@@ -634,15 +663,15 @@
       </Files>
     </Project>
 
-    <Project name="PacketDump" path="PacketDump" type="Exe" frameworkVersion="v4_5" icon="..\..\..\docs\Libomv.ico">
+    <Project name="PacketDump" path="PacketDump" type="Exe" frameworkVersion="v4_5" icon="..\data\Libomv.ico">
       <Configuration name="Debug">
         <Options>
-          <OutputPath>../../../bin/</OutputPath>
+          <OutputPath>../bin/</OutputPath>
         </Options>
       </Configuration>
       <Configuration name="Release">
         <Options>
-          <OutputPath>../../../bin/</OutputPath>
+          <OutputPath>../bin/</OutputPath>
         </Options>
       </Configuration>
 
@@ -658,15 +687,15 @@
       </Files>
     </Project>
 
-    <Project name="TestClient" path="TestClient" type="Exe" frameworkVersion="v4_5" icon="..\..\..\docs\Libomv.ico">
+    <Project name="TestClient" path="TestClient" type="Exe" frameworkVersion="v4_5" icon="..\data\Libomv.ico">
       <Configuration name="Debug">
         <Options>
-          <OutputPath>../../../bin/</OutputPath>
+          <OutputPath>../bin/</OutputPath>
         </Options>
       </Configuration>
       <Configuration name="Release">
         <Options>
-          <OutputPath>../../../bin/</OutputPath>
+          <OutputPath>../bin/</OutputPath>
         </Options>
       </Configuration>
 
